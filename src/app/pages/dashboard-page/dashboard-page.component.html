@@ -1,6 +1,14 @@
 <div class="dashboard-container">
     <h2>GitHub Dashboard</h2>
   
+    <div *ngIf="userInfo">
+      <img [src]="userInfo.avatar_url" alt="Avatar" class="avatar">
+      <p><strong>Bio:</strong> {{ userInfo.bio || 'No bio available' }}</p>
+      <p><strong>Location:</strong> {{ userInfo.location || 'Not provided' }}</p>
+      <p><strong>Public Repos:</strong> {{ userInfo.public_repos }}</p>
+      <p><strong>Followers:</strong> {{ userInfo.followers }} | <strong>Following:</strong> {{ userInfo.following }}</p>
+    </div>
+  
     <div *ngIf="repositories.length > 0">
       <h3>Repositories</h3>
       <ul>

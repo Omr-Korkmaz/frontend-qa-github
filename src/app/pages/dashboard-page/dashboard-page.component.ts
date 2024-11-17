@@ -2,6 +2,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthGithubService } from '../../services/auth-github.service';
+import { UserService } from '../../services/user.service';
+import { GithubUser, GithubRepository } from '../../model/github.model';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 @Component({
@@ -12,22 +14,38 @@ import { CommonModule } from '@angular/common';
   styleUrl: './dashboard-page.component.scss'
 })
 export class DashboardPageComponent implements OnInit {
-  token: string = ''; 
-  repositories: any[] = [];
+  token: string = '';
+  repositories: GithubRepository[] = [];
   commits: any[] = [];
-  selectedRepo: any = null;
+  selectedRepo: GithubRepository | null = null;
+  userInfo: GithubUser | null = null;
+  errorMessage: string = '';
 
   constructor(
     private authGithubService: AuthGithubService, 
+    private userService: UserService,
     private route: ActivatedRoute 
   ) {}
 
+  // ngOnInit(): void {
+  //   this.route.queryParams.subscribe((params) => {
+  //     this.token = params['token'];
+
+  //     if (this.token) {
+  //       this.getRepositories(); 
+  //     }
+  //   });
+  // }
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
       this.token = params['token'];
 
       if (this.token) {
-        this.getRepositories(); 
+        this.getRepositories();
+        this.userInfo = this.userService.getUserInfo();
+        if (!this.userInfo) {
+          this.errorMessage = 'User info not found. Please log in again.';
+        }
       }
     });
   }
