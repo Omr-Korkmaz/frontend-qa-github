@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthGithubService } from '../../services/auth-github.service';
@@ -6,11 +5,12 @@ import { UserService } from '../../services/user.service';
 import { GithubUser, GithubRepository } from '../../model/github.model';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ChartComponent } from '../../components/chart/chart.component';
 
 @Component({
   selector: 'app-dashboard-page',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, ChartComponent], 
   templateUrl: './dashboard-page.component.html',
   styleUrls: ['./dashboard-page.component.scss'],
 })
@@ -20,6 +20,10 @@ export class DashboardPageComponent implements OnInit {
   selectedRepo: GithubRepository | null = null;
   userInfo: GithubUser | null = null;
   errorMessage: string = '';
+  
+  // Initialize chart data variables
+  chartData: number[] = [];
+  chartLabels: string[] = [];
 
   constructor(
     private authGithubService: AuthGithubService,
@@ -36,7 +40,6 @@ export class DashboardPageComponent implements OnInit {
         this.authGithubService.setToken(token);
 
         this.getUserInfo();
-
         this.getRepositories();
       } else {
         this.errorMessage = 'No token provided. Please log in again.';
@@ -48,6 +51,21 @@ export class DashboardPageComponent implements OnInit {
     this.authGithubService.getUserInfo().subscribe(
       (data: GithubUser) => {
         this.userInfo = data;
+        
+        console.log('userInfo:', this.userInfo);
+        console.log('Public Repos:', this.userInfo?.public_repos);
+        console.log('Followers:', this.userInfo?.followers);
+        console.log('Following:', this.userInfo?.following);
+
+        if (this.userInfo?.public_repos != null && this.userInfo?.followers != null && this.userInfo?.following != null) {
+          this.chartData = [this.userInfo.public_repos, this.userInfo.followers, this.userInfo.following];
+          this.chartLabels = ['Public Repos', 'Followers', 'Following'];
+          
+          console.log('Chart Data:', this.chartData);
+          console.log('Chart Labels:', this.chartLabels);
+        } else {
+          console.error('Some user info values are missing or invalid!');
+        }
       },
       (error: any) => {
         this.errorMessage = 'Error fetching user info. Please log in again.';
