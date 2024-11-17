@@ -10,23 +10,38 @@ import { GithubUser, GithubRepository } from '../model/github.model'
 })
 export class AuthGithubService {
   private baseUrl = 'https://api.github.com'; 
+  private token: string | null = null;  
+
 
   constructor(private http: HttpClient) {}
 
-  getRepositories(token: string): Observable<GithubRepository> {
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    const url = `${this.baseUrl}/user/repos`;
-    return this.http.get<GithubRepository>(url, { headers });
-  }
+    setToken(token: string): void {
+      this.token = token;
+    }
+  
+    getToken(): string | null {
+      return this.token;
+    }
+  
+    hasToken(): boolean {
+      return this.token !== null;
+    }
+  
 
-  getCommits(token: string, owner: string, repo: string): Observable<GithubRepository> {
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    const url = `${this.baseUrl}/repos/${owner}/${repo}/commits`;
-    return this.http.get<GithubRepository>(url, { headers });
-  }
+    getRepositories(): Observable<GithubRepository> {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
+      const url = `${this.baseUrl}/user/repos`;
+      return this.http.get<GithubRepository>(url, { headers });
+    }
 
-  getUserInfo(token: string): Observable<GithubUser> {
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    getCommits(owner: string, repo: string): Observable<any> {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
+      const url = `${this.baseUrl}/repos/${owner}/${repo}/commits`;
+      return this.http.get<any>(url, { headers });
+    }
+
+  getUserInfo(): Observable<GithubUser> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
     const url = `${this.baseUrl}/user`;
     return this.http.get<GithubUser>(url, { headers });
   }

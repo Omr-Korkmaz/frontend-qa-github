@@ -77,3 +77,23 @@ export interface GithubRepository {
   topics: string[];
   visibility: string;
 }
+
+
+
+export interface Commit {
+  sha: string; 
+  committer: Committer;
+  commit: CommitDetails; 
+  html_url: string;
+}
+
+export interface Committer {
+  name: string;
+  avatar_url: string;
+  html_url: string;
+}
+
+export interface CommitDetails {
+  message: string;
+  date: string; 
+}

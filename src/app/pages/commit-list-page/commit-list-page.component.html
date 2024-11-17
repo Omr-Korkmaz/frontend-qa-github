@@ -1,0 +1,28 @@
+<div class="commit-list-container">
+    <h2>Commits for {{ repositoryName }} - {{ ownerLogin }}</h2>
+  
+    <div *ngIf="errorMessage" class="error-message">
+      <p>{{ errorMessage }}</p>
+    </div>
+  
+    <div *ngIf="commits.length > 0">
+      <ul>
+        <li *ngFor="let commit of commits">
+          <div class="commit">
+            <div class="committer-info">
+              <img [src]="commit.committer.avatar_url" alt="{{ commit.committer.name }}" class="avatar">
+              <a [href]="commit.committer.html_url" target="_blank">{{ commit.committer.name }}</a>
+            </div>
+            <p><strong>Message:</strong> {{ commit.commit.message }}</p>
+            <p><strong>Commit SHA:</strong> {{ commit.sha }}</p>
+            <a [href]="commit.html_url" target="_blank">View on GitHub</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  
+    <div *ngIf="commits.length === 0">
+      <p>No commits available.</p>
+    </div>
+  </div>
+  

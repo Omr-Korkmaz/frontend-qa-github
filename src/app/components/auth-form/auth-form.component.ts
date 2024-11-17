@@ -27,8 +27,9 @@ export class AuthFormComponent {
   authenticate() {
     if (this.token) {
       this.errorMessage = '';
+      this.authGithubService.setToken(this.token);
 
-      this.authGithubService.getUserInfo(this.token).subscribe(
+      this.authGithubService.getUserInfo().subscribe(
         (data: GithubUser) => {
           console.log("personel", data)
           this.userService.setUserInfo(data);

@@ -1,20 +1,20 @@
 
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthGithubService } from '../../services/auth-github.service';
 import { UserService } from '../../services/user.service';
 import { GithubUser, GithubRepository } from '../../model/github.model';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+
 @Component({
   selector: 'app-dashboard-page',
   standalone: true,
-  imports: [FormsModule, CommonModule ],
+  imports: [FormsModule, CommonModule],
   templateUrl: './dashboard-page.component.html',
-  styleUrl: './dashboard-page.component.scss'
+  styleUrls: ['./dashboard-page.component.scss'],
 })
 export class DashboardPageComponent implements OnInit {
-  token: string = '';
   repositories: GithubRepository[] = [];
   commits: any[] = [];
   selectedRepo: GithubRepository | null = null;
@@ -22,59 +22,83 @@ export class DashboardPageComponent implements OnInit {
   errorMessage: string = '';
 
   constructor(
-    private authGithubService: AuthGithubService, 
+    private authGithubService: AuthGithubService,
     private userService: UserService,
-    private route: ActivatedRoute 
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
-  // ngOnInit(): void {
-  //   this.route.queryParams.subscribe((params) => {
-  //     this.token = params['token'];
-
-  //     if (this.token) {
-  //       this.getRepositories(); 
-  //     }
-  //   });
-  // }
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
-      this.token = params['token'];
+      const token = params['token'];
 
-      if (this.token) {
+      if (token) {
+        this.authGithubService.setToken(token);
+
+        this.getUserInfo();
+
         this.getRepositories();
-        this.userInfo = this.userService.getUserInfo();
-        if (!this.userInfo) {
-          this.errorMessage = 'User info not found. Please log in again.';
-        }
+      } else {
+        this.errorMessage = 'No token provided. Please log in again.';
       }
     });
   }
 
-  getRepositories() {
-    this.authGithubService.getRepositories(this.token).subscribe(
-      (data: any) => {
-        this.repositories = data;
-        console.log("repo", data)
+  getUserInfo() {
+    this.authGithubService.getUserInfo().subscribe(
+      (data: GithubUser) => {
+        this.userInfo = data;
       },
       (error: any) => {
+        this.errorMessage = 'Error fetching user info. Please log in again.';
+        console.error('Error fetching user info:', error);
+      }
+    );
+  }
+
+  getRepositories() {
+    const token = this.authGithubService.getToken();
+
+    if (!token) {
+      this.errorMessage = 'Token is missing. Please log in again.';
+      return;
+    }
+
+    this.authGithubService.getRepositories().subscribe(
+      (data: any) => {
+        this.repositories = data;
+        console.log('Repositories:', data);
+      },
+      (error: any) => {
+        this.errorMessage = 'Error fetching repositories. Please try again.';
         console.error('Error fetching repositories:', error);
       }
     );
   }
 
   getCommits(owner: string, repo: string) {
-    this.authGithubService.getCommits(this.token, owner, repo).subscribe(
+    const token = this.authGithubService.getToken();
+
+    if (!token) {
+      this.errorMessage = 'Token is missing. Please log in again.';
+      return;
+    }
+
+    this.authGithubService.getCommits(owner, repo).subscribe(
       (data: any) => {
         this.commits = data;
+        console.log('Commits:', data);
       },
       (error: any) => {
+        this.errorMessage = 'Error fetching commits. Please try again.';
         console.error('Error fetching commits:', error);
       }
     );
   }
 
-  selectRepository(repo: any) {
-    this.selectedRepo = repo;
-    this.getCommits(repo.owner.login, repo.name);
+  selectRepository(repo: GithubRepository) {
+    this.router.navigate(['/commit-list'], {
+      queryParams: { ownerLogin: repo.owner.login, repositoryName: repo.name },
+    });
   }
 }
