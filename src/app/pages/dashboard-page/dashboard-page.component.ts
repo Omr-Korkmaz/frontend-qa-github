@@ -36,6 +36,7 @@ export class DashboardPageComponent implements OnInit {
     this.authGithubService.getRepositories(this.token).subscribe(
       (data: any) => {
         this.repositories = data;
+        console.log("repo", data)
       },
       (error: any) => {
         console.error('Error fetching repositories:', error);

@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthGithubService } from '../../services/auth-github.service';
+import { GithubUser, GithubRepository } from '../../model/github.model'
 
 @Component({
   selector: 'app-auth-form',
@@ -27,6 +28,7 @@ export class AuthFormComponent {
 
       this.authGithubService.getUserInfo(this.token).subscribe(
         (data: any) => {
+          console.log("personel", data)
           this.router.navigate(['/dashboard'], {
             queryParams: { token: this.token },
           });
