@@ -1,1 +1,16 @@
-<p>auth-form works!</p>
+
+   <div class="form-container">
+    <h2>GitHub Authentication</h2>
+  
+    <label for="token">
+      GitHub Personal Access Token:
+      <input id="token" type="text" [(ngModel)]="token" placeholder="Enter your GitHub Token" />
+    </label>
+  
+    <button (click)="authenticate()">Authenticate with GitHub</button>
+  
+    <div *ngIf="errorMessage" class="error-message">
+      <p>{{ errorMessage }}</p>
+    </div>
+  </div>
+  

@@ -1,0 +1,28 @@
+<div class="dashboard-container">
+    <h2>GitHub Dashboard</h2>
+  
+    <div *ngIf="repositories.length > 0">
+      <h3>Repositories</h3>
+      <ul>
+        <li *ngFor="let repo of repositories" (click)="selectRepository(repo)">
+          {{ repo.name }} - {{ repo.description || 'No description' }}
+        </li>
+      </ul>
+    </div>
+  
+    <div *ngIf="selectedRepo">
+      <h4>Selected Repository: {{ selectedRepo.name }}</h4>
+      <button (click)="getCommits(selectedRepo.owner.login, selectedRepo.name)">Get Commits</button>
+    </div>
+  
+    <div *ngIf="commits.length > 0">
+      <h3>Commits</h3>
+      <ul>
+        <li *ngFor="let commit of commits">
+          <p><strong>{{ commit.committer.name }}:</strong> {{ commit.commit.message }}</p>
+          <p><strong>Commit SHA:</strong> {{ commit.sha }}</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+  
