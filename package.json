@@ -21,6 +21,7 @@
     "@scania/tegel-angular-17": "^1.19.0",
     "chart.js": "^4.4.6",
     "rxjs": "~7.8.0",
+    "timeago.js": "^4.0.2",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.10"
   },

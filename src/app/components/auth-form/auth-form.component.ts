@@ -1,4 +1,3 @@
-
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -29,19 +28,19 @@ export class AuthFormComponent {
       this.errorMessage = '';
       this.authGithubService.setToken(this.token);
 
-      this.authGithubService.getUserInfo().subscribe(
-        (data: GithubUser) => {
-          console.log("personel", data)
+      this.authGithubService.getUserInfo().subscribe({
+        next: (data: GithubUser) => { 
+          console.log("Fetched User Data:", data);
           this.userService.setUserInfo(data);
           this.router.navigate(['/dashboard'], {
             queryParams: { token: this.token },
           });
         },
-        (error: any) => {
+        error: (error: { message: string; status: number }) => { 
           this.errorMessage = 'Invalid GitHub token. Please try again.';
           console.error('Error fetching user info:', error);
         }
-      );
+      });
     } else {
       this.errorMessage = 'Please enter a valid GitHub token.';
     }

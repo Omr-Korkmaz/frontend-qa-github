@@ -1,28 +1,24 @@
-<div class="commit-list-container">
-    <h2>Commits for {{ repositoryName }} - {{ ownerLogin }}</h2>
-  
-    <div *ngIf="errorMessage" class="error-message">
-      <p>{{ errorMessage }}</p>
+<div *ngIf="groupedCommits.length; else noCommits">
+    <div *ngFor="let group of groupedCommits" class="commit-group">
+      <h3 class="commit-date">{{ group.date }}</h3>
+      <div *ngFor="let commit of group.commits" class="commit">
+        <img [src]="commit.committer.avatar_url" alt="Avatar" class="avatar">
+        <div class="commit-details">
+          <p class="commit-message">{{ commit.commit.message }}</p>
+          <p class="commit-author">
+            {{ commit.commit.author.name }} authored {{ commit.timeAgo }}
+          </p>
+          <a [href]="commit.html_url" target="_blank" class="commit-link">View Commit</a>
+        </div>
+      </div>
     </div>
+  </div>
   
-    <div *ngIf="commits.length > 0">
-      <ul>
-        <li *ngFor="let commit of commits">
-          <div class="commit">
-            <div class="committer-info">
-              <img [src]="commit.committer.avatar_url" alt="{{ commit.committer.name }}" class="avatar">
-              <a [href]="commit.committer.html_url" target="_blank">{{ commit.committer.name }}</a>
-            </div>
-            <p><strong>Message:</strong> {{ commit.commit.message }}</p>
-            <p><strong>Commit SHA:</strong> {{ commit.sha }}</p>
-            <a [href]="commit.html_url" target="_blank">View on GitHub</a>
-          </div>
-        </li>
-      </ul>
-    </div>
+  <ng-template #noCommits>
+    <p>No commits available.</p>
+  </ng-template>
   
-    <div *ngIf="commits.length === 0">
-      <p>No commits available.</p>
-    </div>
+  <div *ngIf="errorMessage" class="error">
+    {{ errorMessage }}
   </div>
   

@@ -6,7 +6,6 @@ import { GithubUser } from '../model/github.model';
   providedIn: 'root',
 })
 export class UserService {
-  // private userInfo: GithubUser | null = null;
   private userInfoSubject: BehaviorSubject<GithubUser | null> = new BehaviorSubject<GithubUser | null>(null);
   userInfo$: Observable<GithubUser | null> = this.userInfoSubject.asObservable();
 
@@ -22,15 +21,5 @@ export class UserService {
   clearUserInfo(): void {
     this.userInfoSubject.next(null); 
   }
-  // setUserInfo(user: GithubUser): void {
-  //   this.userInfo = user;
-  // }
 
-  // getUserInfo(): GithubUser | null {
-  //   return this.userInfo;
-  // }
-
-  // clearUserInfo(): void {
-  //   this.userInfo = null;
-  // }
 }

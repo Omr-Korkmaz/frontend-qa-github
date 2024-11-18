@@ -1,66 +1,72 @@
-<!-- <div class="dashboard-container">
-    <h2>GitHub Dashboard</h2>
+<div class="dashboard-container">
+    <h2 class="tds-headline-02">GitHub Dashboard Summary</h2>
   
-    <div *ngIf="userInfo">
-      <img [src]="userInfo.avatar_url" alt="Avatar" class="avatar">
-      <p><strong>Bio:</strong> {{ userInfo.bio || 'No bio available' }}</p>
-      <p><strong>Location:</strong> {{ userInfo.location || 'Not provided' }}</p>
-      <p><strong>Public Repos:</strong> {{ userInfo.public_repos }}</p>
-      <p><strong>Followers:</strong> {{ userInfo.followers }} | <strong>Following:</strong> {{ userInfo.following }}</p>
-    </div>
+    <ng-container *ngIf="userInfo; else loading">
+      <tds-block mode-variant="primary">
+        <p class="tds-body-01">
+          <strong>Public Repos:</strong> {{ userInfo.public_repos }} <br />
+          <strong>Bio:</strong> {{ userInfo.bio || 'No bio available' }} <br />
+          <strong>Location:</strong> {{ userInfo.location || 'Not provided' }}
+        </p>
+      </tds-block>
   
-    <div *ngIf="repositories.length > 0">
-      <h3>Repositories</h3>
+      <div class="container">
+        <div class="wrapper">
+          <tds-block mode-variant="primary">
+            <p class="tds-body-01">Number of projects</p>
+            <h3 class="tds-headline-01">{{ repositories.length }}</h3>
+          </tds-block>
+  
+        
+          <tds-block mode-variant="primary" (click)="navigateToAllCommits()">
+            <p class="tds-body-01">Total Commits Across All Repositories</p>
+            <h3 class="tds-headline-01">{{ totalCommits }}</h3>
+          </tds-block>
+          
+  
+          <tds-block mode-variant="primary">
+            <p class="tds-body-01">Followers</p>
+            <h3 class="tds-headline-01">{{ userInfo.followers }}</h3>
+          </tds-block>
+  
+          <tds-block mode-variant="primary">
+            <p class="tds-body-01">Following</p>
+            <h3 class="tds-headline-01">{{ userInfo.following }}</h3>
+          </tds-block>
+  
+          <div class="commit-chart">
+            <app-chart
+              chartId="barChart"
+              chartType="bar"
+              [chartData]="barChartData"
+              [chartLabels]="barChartLabels"
+              chartTitle="Commits Per Month"
+            ></app-chart>
+          </div>
+  
+          <div class="pie-chart">
+            <app-chart
+              chartId="pieChart"
+              chartType="pie"
+              [chartData]="languageChartData"
+              [chartLabels]="languageChartLabels"
+              chartTitle="Programming Language Usage"
+            ></app-chart>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  
+    <ng-template #loading>
+      <p>Loading user information...</p>
+    </ng-template>
+  
+    <div *ngIf="repositories?.length">
+      <h3 class="tds-headline-03">Repositories</h3>
       <ul>
         <li *ngFor="let repo of repositories" (click)="selectRepository(repo)">
           {{ repo.name }} - {{ repo.description || 'No description' }}
-        </li>
-      </ul>
-    </div>
-  
-    <div *ngIf="selectedRepo">
-      <h4>Selected Repository: {{ selectedRepo.name }}</h4>
-      <button (click)="getCommits(selectedRepo.owner.login, selectedRepo.name)">Get Commits</button>
-    </div>
-  
-    <div *ngIf="commits.length > 0">
-      <h3>Commits</h3>
-      <ul>
-        <li *ngFor="let commit of commits">
-          <p><strong>{{ commit.committer.name }}:</strong> {{ commit.commit.message }}</p>
-          <p><strong>Commit SHA:</strong> {{ commit.sha }}</p>
-        </li>
-      </ul>
-    </div>
-  </div>
-   -->
-
-   <div class="dashboard-container">
-    <h2>GitHub Dashboard</h2>
-  
-    <div *ngIf="userInfo">
-      <img [src]="userInfo.avatar_url" alt="Avatar" class="avatar">
-      <p><strong>Bio:</strong> {{ userInfo.bio || 'No bio available' }}</p>
-      <p><strong>Location:</strong> {{ userInfo.location || 'Not provided' }}</p>
-      <p><strong>Public Repos:</strong> {{ userInfo.public_repos }}</p>
-      <p><strong>Followers:</strong> {{ userInfo.followers }} | <strong>Following:</strong> {{ userInfo.following }}</p>
-    </div>
-  
-    <!-- Chart -->
-    <app-chart
-    chartId="userStatsChart"
-    chartType="pie"
-    [chartData]="[userInfo?.public_repos || 0, userInfo?.followers || 0, userInfo?.following || 0]"
-    [chartLabels]="['Public Repos', 'Followers', 'Following']"
-    chartTitle="User Statistics"
-  ></app-chart>
-  
-  
-    <div *ngIf="repositories.length > 0">
-      <h3>Repositories</h3>
-      <ul>
-        <li *ngFor="let repo of repositories" (click)="selectRepository(repo)">
-          {{ repo.name }} - {{ repo.description || 'No description' }}
+          <span *ngIf="repo.isEmpty">(Empty repository)</span>
         </li>
       </ul>
     </div>

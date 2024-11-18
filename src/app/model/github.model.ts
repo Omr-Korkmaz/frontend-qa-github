@@ -76,16 +76,32 @@ export interface GithubRepository {
   svn_url: string;
   topics: string[];
   visibility: string;
+  isEmpty?: boolean; //extra
+
 }
 
 
 
 export interface Commit {
-  sha: string; 
-  committer: Committer;
-  commit: CommitDetails; 
+  sha: string;
+  committer: {
+    name: string;
+    avatar_url: string;
+    html_url: string;
+  };
+  commit: {
+    message: string;
+    author: {
+      name: string;
+      date: string;
+    };
+  };
   html_url: string;
+  authorText?: string; // extra
+  timeAgo?: string; // extra 
 }
+
+
 
 export interface Committer {
   name: string;

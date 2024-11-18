@@ -1,33 +1,51 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthGithubService } from '../../services/auth-github.service';
-import { UserService } from '../../services/user.service';
-import { GithubUser, GithubRepository } from '../../model/github.model';
-import { FormsModule } from '@angular/forms';
+import { GithubRepository, GithubUser } from '../../model/github.model';
+import { UserInfoComponent } from '../../components/user-info/user-info.component';
+import { RepositoryListComponent } from './components/repository-list/repository-list.component';
+import { CommitStatsComponent } from './components/commit-stats/commit-stats.component';
 import { CommonModule } from '@angular/common';
+import { PLanguageUsageComponent } from './components/p-language-usage/p-language-usage.component';
+import { TegelModule } from '@scania/tegel-angular-17';
+import { FormsModule } from '@angular/forms';
 import { ChartComponent } from '../../components/chart/chart.component';
-
+import { LanguageChartComponent } from './components/language-chart/language-chart.component';
+import { forkJoin } from 'rxjs';
 @Component({
   selector: 'app-dashboard-page',
   standalone: true,
-  imports: [FormsModule, CommonModule, ChartComponent], 
+  imports: [
+    UserInfoComponent,
+    PLanguageUsageComponent,
+    RepositoryListComponent,
+    CommitStatsComponent,
+    CommonModule,
+    LanguageChartComponent,
+    TegelModule,
+    FormsModule,
+    ChartComponent
+  ],
   templateUrl: './dashboard-page.component.html',
   styleUrls: ['./dashboard-page.component.scss'],
 })
 export class DashboardPageComponent implements OnInit {
-  repositories: GithubRepository[] = [];
-  commits: any[] = [];
-  selectedRepo: GithubRepository | null = null;
   userInfo: GithubUser | null = null;
+  repositories: GithubRepository[] = [];
+  totalCommits: number = 0;
   errorMessage: string = '';
-  
-  // Initialize chart data variables
-  chartData: number[] = [];
-  chartLabels: string[] = [];
+
+
+  languageChartData: number[] = [];
+  languageChartLabels: string[] = [];
+  languageStats: { [key: string]: number } = {};
+
+  barChartLabels: string[] = [];
+  barChartData: number[] = [];
+
 
   constructor(
     private authGithubService: AuthGithubService,
-    private userService: UserService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -35,85 +53,116 @@ export class DashboardPageComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
       const token = params['token'];
-
       if (token) {
         this.authGithubService.setToken(token);
-
-        this.getUserInfo();
-        this.getRepositories();
+        this.loadData();
       } else {
         this.errorMessage = 'No token provided. Please log in again.';
       }
     });
+    this.authGithubService.getLanguages('owner', 'repo').subscribe((languages) => {
+      this.languageChartLabels = Object.keys(languages);
+      this.languageChartData = Object.values(languages);
+    });
+
+    this.authGithubService.getCommitsPerMonth().subscribe((monthlyCommits) => {
+      this.barChartLabels = Object.keys(monthlyCommits);
+      this.barChartData = Object.values(monthlyCommits);
+    });
   }
 
-  getUserInfo() {
-    this.authGithubService.getUserInfo().subscribe(
-      (data: GithubUser) => {
-        this.userInfo = data;
-        
-        console.log('userInfo:', this.userInfo);
-        console.log('Public Repos:', this.userInfo?.public_repos);
-        console.log('Followers:', this.userInfo?.followers);
-        console.log('Following:', this.userInfo?.following);
+  private loadData() {
+    this.authGithubService.getUserInfo().subscribe({
+      next: (user) => (this.userInfo = user),
+      error: (err) => (this.errorMessage = 'Error fetching user info.')
+    });
 
-        if (this.userInfo?.public_repos != null && this.userInfo?.followers != null && this.userInfo?.following != null) {
-          this.chartData = [this.userInfo.public_repos, this.userInfo.followers, this.userInfo.following];
-          this.chartLabels = ['Public Repos', 'Followers', 'Following'];
-          
-          console.log('Chart Data:', this.chartData);
-          console.log('Chart Labels:', this.chartLabels);
-        } else {
-          console.error('Some user info values are missing or invalid!');
-        }
+    this.authGithubService.getRepositories().subscribe({
+
+      next: (repos) => {
+        this.repositories = repos.map(repo => ({
+          ...repo,
+          isEmpty: repo.size === 0 
+        }));
+        this.prepareLanguageChart(this.repositories);
+        this.getTotalCommits(this.repositories);
       },
-      (error: any) => {
-        this.errorMessage = 'Error fetching user info. Please log in again.';
-        console.error('Error fetching user info:', error);
-      }
+      error: (err) => (this.errorMessage = 'Error fetching repositories.')
+    });
+  }
+
+  private getTotalCommits(repos: GithubRepository[]): void {
+    const commitRequests = repos.map((repo) =>
+      this.authGithubService.fetchAllCommits(repo.owner.login, repo.name)
     );
-  }
-
-  getRepositories() {
-    const token = this.authGithubService.getToken();
-
-    if (!token) {
-      this.errorMessage = 'Token is missing. Please log in again.';
-      return;
-    }
-
-    this.authGithubService.getRepositories().subscribe(
-      (data: any) => {
-        this.repositories = data;
-        console.log('Repositories:', data);
+  
+    forkJoin(commitRequests).subscribe({
+      next: (commitsArray) => {
+        this.totalCommits = commitsArray.reduce((sum, commits) => sum + commits.length, 0);
       },
-      (error: any) => {
-        this.errorMessage = 'Error fetching repositories. Please try again.';
-        console.error('Error fetching repositories:', error);
-      }
-    );
-  }
-
-  getCommits(owner: string, repo: string) {
-    const token = this.authGithubService.getToken();
-
-    if (!token) {
-      this.errorMessage = 'Token is missing. Please log in again.';
-      return;
-    }
-
-    this.authGithubService.getCommits(owner, repo).subscribe(
-      (data: any) => {
-        this.commits = data;
-        console.log('Commits:', data);
-      },
-      (error: any) => {
-        this.errorMessage = 'Error fetching commits. Please try again.';
+      error: (error) => {
+        this.errorMessage = 'Error fetching commit data.';
         console.error('Error fetching commits:', error);
-      }
-    );
+      },
+    });
   }
 
+
+  private prepareLanguageChart(repositories: GithubRepository[]): void {
+    if (!repositories || repositories.length === 0) {
+      console.warn('No repositories provided to prepare language chart.');
+      this.languageChartLabels = [];
+      this.languageChartData = [];
+      return;
+    }
+  
+    this.languageStats = {};
+  
+    repositories.forEach((repo) => {
+      this.authGithubService.getLanguages(repo.owner.login, repo.name).subscribe(
+        (languages) => {
+          for (const [language, bytes] of Object.entries(languages)) {
+            this.languageStats[language] = (this.languageStats[language] || 0) + bytes;
+          }
+  
+          this.updateLanguageChart();
+        },
+        (error) => {
+          console.error(`Error fetching languages for repo ${repo.name}:`, error);
+        }
+      );
+    });
+  }
+  
+  private updateLanguageChart(): void {
+    const totalBytes = (Object.values(this.languageStats) as number[]).reduce(
+      (sum, bytes) => sum + bytes,
+      0
+    );
+  
+    if (totalBytes === 0) {
+      console.warn('No data available for language statistics.');
+      this.languageChartLabels = [];
+      this.languageChartData = [];
+      return;
+    }
+  
+    this.languageChartLabels = Object.keys(this.languageStats);
+    this.languageChartData = (Object.values(this.languageStats) as number[]).map((bytes) =>
+      Number(((bytes / totalBytes) * 100).toFixed(2))
+    );
+  
+    console.log('Language Chart Labels:', this.languageChartLabels); 
+    console.log('Language Chart Data:', this.languageChartData); 
+  }
+  
+  navigateToAllCommits() {
+    this.router.navigate(['/commit-list'], {
+      queryParams: { showAll: true }
+    });
+  }
+  
+  
   selectRepository(repo: GithubRepository) {
     this.router.navigate(['/commit-list'], {
       queryParams: { ownerLogin: repo.owner.login, repositoryName: repo.name },

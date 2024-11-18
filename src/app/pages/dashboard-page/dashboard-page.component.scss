@@ -1,0 +1,62 @@
+.container {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 20px;
+  }
+  
+  tds-block {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .commit-chart {
+    grid-column: span 3; 
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .pie-chart {
+    grid-column: span 1;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  @media (max-width: 1024px) {
+    .wrapper {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  
+    .commit-chart {
+      grid-column: span 2; 
+    }
+  
+    .pie-chart {
+      grid-column: span 2;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .wrapper {
+      grid-template-columns: 1fr; 
+    }
+  
+    .commit-chart, .pie-chart {
+      grid-column: span 1; 
+    }
+  }
+  

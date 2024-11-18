@@ -1,0 +1,10 @@
+<div *ngIf="chartLabels.length > 0">
+    <app-chart 
+      [labels]="chartLabels" 
+      [data]="chartData"
+    ></app-chart>
+  </div>
+  <div *ngIf="chartLabels.length === 0" class="error-message">
+    <p>No language stats available.</p>
+  </div>
+  
