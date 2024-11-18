@@ -1,7 +1,8 @@
+
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthGithubService } from '../../services/auth-github.service';
-import { Commit, GithubRepository } from '../../model/github.model'; 
+import { Commit, GithubRepository } from '../../model/github.model';
 import { UserService } from '../../services/user.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -16,29 +17,48 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./commit-list-page.component.scss'],
 })
 export class CommitListPageComponent implements OnInit {
+  repositories: GithubRepository[] = [];
+  selectedRepository: string = '';
   groupedCommits: { date: string; commits: Commit[] }[] = [];
+  filteredGroupedCommits: { date: string; commits: Commit[] }[] = [];
+  searchTerm: string = '';
   errorMessage: string = '';
-  repositoryName: string = '';
-  ownerLogin: string = '';
+  allCommits: Commit[] = []; 
 
   constructor(
     private authGithubService: AuthGithubService,
     private route: ActivatedRoute,
-    private userService: UserService
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe((params) => {
-      const showAll = params['showAll'] === 'true';
-      const ownerLogin = params['ownerLogin'];
-      const repositoryName = params['repositoryName'];
+    this.loadRepositories();
+    this.getAllCommits(); 
+  }
 
-      if (showAll) {
-        this.getAllCommits();
-      } else if (ownerLogin && repositoryName) {
-        this.getCommits(ownerLogin, repositoryName);
-      }
+  loadRepositories(): void {
+    this.authGithubService.getRepositories().subscribe({
+      next: (repos) => {
+        this.repositories = repos;
+      },
+      error: (error) => {
+        console.error('Error fetching repositories:', error);
+        this.errorMessage = 'Error fetching repositories.';
+      },
     });
+  }
+
+  selectRepository(repoName: string): void {
+    const selectedRepo = this.repositories.find((repo) => repo.name === repoName);
+    if (selectedRepo) {
+      this.getCommits(selectedRepo.owner.login, selectedRepo.name);
+    }
+  }
+
+  resetFilters(): void {
+    this.selectedRepository = '';
+    this.searchTerm = '';
+    this.groupCommitsByDate(this.allCommits); 
   }
 
   getAllCommits(): void {
@@ -50,7 +70,7 @@ export class CommitListPageComponent implements OnInit {
 
         forkJoin(commitRequests).subscribe({
           next: (allCommitsArray: Commit[][]) => {
-            const allCommits = allCommitsArray.flat().map((commit) => ({
+            this.allCommits = allCommitsArray.flat().map((commit) => ({
               sha: commit.sha,
               html_url: commit.html_url,
               committer: {
@@ -68,7 +88,7 @@ export class CommitListPageComponent implements OnInit {
               timeAgo: timeago.format(commit.commit.author.date),
             }));
 
-            this.groupCommitsByDate(allCommits);
+            this.groupCommitsByDate(this.allCommits);
           },
           error: (error) => {
             console.error('Error fetching all commits:', error);
@@ -127,5 +147,31 @@ export class CommitListPageComponent implements OnInit {
       date,
       commits: grouped[date],
     }));
+
+    this.filteredGroupedCommits = this.sortCommitsByDate(this.groupedCommits);
+  }
+
+  filterCommits(): void {
+    const filteredCommits = this.groupedCommits.map((group) => ({
+      date: group.date,
+      commits: group.commits.filter((commit) => {
+        const searchText = this.searchTerm.toLowerCase();
+        return (
+          commit.commit.message.toLowerCase().includes(searchText) ||
+          commit.commit.author.name.toLowerCase().includes(searchText) ||
+          commit.sha.toLowerCase().includes(searchText)
+        );
+      }),
+    })).filter(group => group.commits.length > 0);
+
+    this.filteredGroupedCommits = this.sortCommitsByDate(filteredCommits);
+  }
+
+  sortCommitsByDate(groups: { date: string; commits: Commit[] }[]): { date: string; commits: Commit[] }[] {
+    return groups.sort((a, b) => {
+      const dateA = new Date(a.date).getTime();
+      const dateB = new Date(b.date).getTime();
+      return dateB - dateA;
+    });
   }
 }
