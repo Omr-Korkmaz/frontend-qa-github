@@ -6,16 +6,21 @@ import { Commit, GithubRepository } from '../../model/github.model';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import * as timeago from 'timeago.js';
-import { forkJoin } from 'rxjs';
+import { forkJoin, map } from 'rxjs';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { TegelModule } from '@scania/tegel-angular-17';
 
-
+import { FilterControlsComponent } from '../../components/filter-controls/filter-controls.component';
+import { CommitListComponent } from '../../components/commit-list/commit-list.component';
+import { PaginatorComponent } from '../../components/paginator/paginator.component';
 
 @Component({
   selector: 'app-commit-list-page',
   standalone: true,
-  imports: [FormsModule, CommonModule, MatPaginatorModule, TegelModule],
+  imports: [FormsModule, CommonModule, MatPaginatorModule, TegelModule, CommonModule,
+    FilterControlsComponent,
+    CommitListComponent,
+    PaginatorComponent,],
   templateUrl: './commit-list-page.component.html',
   styleUrls: ['./commit-list-page.component.scss'],
 })
@@ -35,8 +40,8 @@ export class CommitListPageComponent implements OnInit {
 
   constructor(
     private authGithubService: AuthGithubService,
-    private route: ActivatedRoute,
-    private router: Router
+    // private route: ActivatedRoute,
+    // private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -56,51 +61,78 @@ export class CommitListPageComponent implements OnInit {
     });
   }
 
+  // selectRepository(repoName: string): void {
+  //   this.selectedRepository = repoName;
+  //   this.errorMessage = '';
+  //   this.loading = true; 
+  //   this.currentPage = 0; 
+  
+  //   const selectedRepo = this.repositories.find((repo) => repo.name === repoName);
+  
+  //   if (selectedRepo) {
+  //     this.authGithubService.getCommits(selectedRepo.owner.login, selectedRepo.name).subscribe({
+  //       next: (commits: Commit[]) => {
+  //         this.loading = false;
+  
+  //         if (commits.length === 0) {
+  //           this.errorMessage = 'No commits found for this repository.';
+  //           this.groupedCommits = [];
+  //           this.filteredGroupedCommits = [];
+  //           this.filteredPagedCommits = [];
+  //         } else {
+  //           this.groupCommitsByDate(commits);
+  //           this.updatePagedCommits();
+  //         }
+  //       },
+  //       error: (error) => {
+  //         this.loading = false;
+  //         this.errorMessage = 'Error fetching commits for the selected repository.';
+  //         this.groupedCommits = [];
+  //         this.filteredGroupedCommits = [];
+  //         this.filteredPagedCommits = [];
+  //       },
+  //     });
+  //   } else {
+  //     this.loading = false;
+  //     this.resetFilters();
+  //   }
+  // }
+  
   selectRepository(repoName: string): void {
     this.selectedRepository = repoName;
-    this.errorMessage = '';
-    this.loading = true; 
-    this.currentPage = 0; 
+    this.currentPage = 0; // Reset pagination
   
-    const selectedRepo = this.repositories.find((repo) => repo.name === repoName);
-  
-    if (selectedRepo) {
-      this.authGithubService.getCommits(selectedRepo.owner.login, selectedRepo.name).subscribe({
-        next: (commits: Commit[]) => {
-          this.loading = false;
-  
-          if (commits.length === 0) {
-            this.errorMessage = 'No commits found for this repository.';
-            this.groupedCommits = [];
-            this.filteredGroupedCommits = [];
-            this.filteredPagedCommits = [];
-          } else {
-            this.groupCommitsByDate(commits);
-            this.updatePagedCommits();
-          }
-        },
-        error: (error) => {
-          this.loading = false;
-          this.errorMessage = 'Error fetching commits for the selected repository.';
-          this.groupedCommits = [];
-          this.filteredGroupedCommits = [];
-          this.filteredPagedCommits = [];
-        },
-      });
+    if (!repoName) {
+      // If no repository is selected, reset to all commits
+      this.groupCommitsByDate(this.allCommits);
     } else {
-      this.loading = false;
-      this.resetFilters();
-    }
-  }
+      const filteredCommits = this.allCommits.filter(
+        (commit) => commit.repository === repoName
+      ); // Assuming your Commit model has a repository property
   
+      this.groupCommitsByDate(filteredCommits);
+    }
+  
+    this.updatePagedCommits();
+  }
   
 
-  resetFilters(): void {
-    this.selectedRepository = '';
-    this.searchTerm = '';
-    this.groupCommitsByDate(this.allCommits); 
-    this.updatePagedCommits(); 
-  }
+  // resetFilters(): void {
+  //   this.selectedRepository = '';
+  //   this.searchTerm = '';
+  //   this.groupCommitsByDate(this.allCommits); 
+  //   this.updatePagedCommits(); 
+  // }resetFilters(): void {
+    resetFilters(): void {
+      console.log('CommitListPageComponent: Reset filters');
+      this.selectedRepository = '';
+      this.groupCommitsByDate(this.allCommits);
+      this.updatePagedCommits();
+    }
+    
+    
+
+  
 
   // getAllCommits(): void {
   //   this.authGithubService.getRepositories().subscribe({
@@ -134,39 +166,46 @@ export class CommitListPageComponent implements OnInit {
   // }
 
 
-getAllCommits(): void {
-  this.authGithubService.getRepositories().subscribe({
-    next: (repos: GithubRepository[]) => {
-      const commitRequests = repos.map((repo) =>
-        this.authGithubService.fetchAllCommits(repo.owner.login, repo.name)
-      );
-
-      forkJoin(commitRequests).subscribe({
-        next: (allCommitsArray: Commit[][]) => {
-          this.allCommits = allCommitsArray.flat().map((commit) => ({
-            ...commit,
-            timeAgo: timeago.format(commit.commit.author.date), 
-          }));
-
-          if (this.allCommits.length === 0) {
-            this.errorMessage = 'No commits found in any repository.';
-          } else {
-            this.groupCommitsByDate(this.allCommits);
-            this.updatePagedCommits(); 
-          }
-        },
-        error: (error) => {
-          console.error('Error fetching all commits:', error);
-          this.errorMessage = 'Error fetching all commits.';
-        },
-      });
-    },
-    error: (error) => {
-      console.error('Error fetching repositories:', error);
-      this.errorMessage = 'Error fetching repositories.';
-    },
-  });
-}
+  getAllCommits(): void {
+    this.authGithubService.getRepositories().subscribe({
+      next: (repos: GithubRepository[]) => {
+        const commitRequests = repos.map((repo) =>
+          this.authGithubService.fetchAllCommits(repo.owner.login, repo.name).pipe(
+            map((commits) =>
+              commits.map((commit) => ({
+                ...commit,
+                repository: repo.name, // Attach the repository name here
+                timeAgo: timeago.format(commit.commit.author.date),
+              }))
+            )
+          )
+        );
+  
+        forkJoin(commitRequests).subscribe({
+          next: (allCommitsArray: Commit[][]) => {
+            this.allCommits = allCommitsArray.flat();
+  
+            if (this.allCommits.length === 0) {
+              this.errorMessage = 'No commits found in any repository.';
+            } else {
+              this.groupCommitsByDate(this.allCommits);
+              this.updatePagedCommits();
+            }
+          },
+          error: (error) => {
+            console.error('Error fetching all commits:', error);
+            this.errorMessage = 'Error fetching all commits.';
+          },
+        });
+      },
+      error: (error) => {
+        console.error('Error fetching repositories:', error);
+        this.errorMessage = 'Error fetching repositories.';
+      },
+    });
+  }
+  
+  
 
 
   getCommits(ownerLogin: string, repositoryName: string): void {
@@ -187,13 +226,12 @@ getAllCommits(): void {
               date: commit.commit.author.date,
             },
           },
-          timeAgo: timeago.format(commit.commit.author.date),         
+          timeAgo: timeago.format(commit.commit.author.date),
+          repository: repositoryName, // Add repository name here
         }));
   
-        this.groupCommitsByDate(commits);
+        this.groupCommitsByDate(commits); // Now the Commit type is satisfied
         this.updatePagedCommits();
-        console.log('Processed dfdfdfd:', commits, );
-
       },
       error: (error) => {
         console.error('Error fetching commits:', error);
@@ -201,6 +239,7 @@ getAllCommits(): void {
       },
     });
   }
+  
 
   private groupCommitsByDate(commits: Commit[]): void {
     const grouped = commits.reduce((acc: Record<string, Commit[]>, commit: Commit) => {
@@ -219,28 +258,37 @@ getAllCommits(): void {
   
     this.filteredGroupedCommits = this.sortCommitsByDate(this.groupedCommits);
   }
-  
+  onFilterChanged(filters: { selectedRepository: string; searchTerm: string }) {
+    this.selectedRepository = filters.selectedRepository;
+    this.searchTerm = filters.searchTerm;
+
+    this.filterCommits(); // Apply filters to the commits
+  }
 
   filterCommits(): void {
-    const filteredCommits = this.groupedCommits
-      .map((group) => ({
-        date: group.date,
-        commits: group.commits.filter((commit) => {
-          const searchText = this.searchTerm.toLowerCase();
-          return (
-            commit.commit.message.toLowerCase().includes(searchText) ||
-            commit.commit.author.name.toLowerCase().includes(searchText) ||
-            commit.sha.toLowerCase().includes(searchText)
-          );
-        }),
-      }))
-      .filter((group) => group.commits.length > 0); 
+    let filteredCommits = this.allCommits;
   
-    this.filteredGroupedCommits = this.sortCommitsByDate(filteredCommits); 
+    if (this.selectedRepository) {
+      filteredCommits = filteredCommits.filter(
+        (commit) => commit.repository === this.selectedRepository
+      );
+    }
   
+    if (this.searchTerm) {
+      const searchText = this.searchTerm.toLowerCase();
+      filteredCommits = filteredCommits.filter(
+        (commit) =>
+          commit.commit.message.toLowerCase().includes(searchText) ||
+          commit.commit.author.name.toLowerCase().includes(searchText) ||
+          commit.sha.toLowerCase().includes(searchText)
+      );
+    }
+  
+    this.groupCommitsByDate(filteredCommits);
     this.currentPage = 0;
-    this.updatePagedCommits(); 
+    this.updatePagedCommits();
   }
+  
   
   
 

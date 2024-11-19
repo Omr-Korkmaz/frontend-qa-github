@@ -1,0 +1,20 @@
+.filter-controls {
+    display: flex;
+    flex-direction: row; 
+    align-items: center; 
+    gap: 15px;
+    padding: 10px; 
+  
+    tds-dropdown,
+    tds-text-field,
+    tds-button {
+      flex: 1; 
+      max-width: 300px;
+    }
+  
+    tds-button {
+      flex: none;
+      max-width: 120px;
+    }
+  }
+  

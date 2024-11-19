@@ -1,0 +1,21 @@
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+
+@Component({
+  selector: 'app-paginator',
+  standalone: true,
+  imports: [CommonModule, MatPaginatorModule], 
+  templateUrl: './paginator.component.html',
+  styleUrls: ['./paginator.component.scss'],
+})
+export class PaginatorComponent {
+  @Input() length = 0;
+  @Input() pageSize = 10;
+  @Input() currentPage = 0;
+  @Output() pageChanged = new EventEmitter<PageEvent>();
+
+  onPageChange(event: PageEvent) {
+    this.pageChanged.emit(event);
+  }
+}

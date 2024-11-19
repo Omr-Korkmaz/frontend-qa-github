@@ -1,24 +1,8 @@
-<!-- 
-<div class="form-container">
-    <h2>GitHub Authentication</h2>
-  
-    <label for="token">
-      GitHub Personal Access Token:
-      <input id="token" type="text" [(ngModel)]="token" placeholder="Enter your GitHub Token" />
-    </label>
-  
-    <button (click)="authenticate()">Authenticate with GitHub</button>
-  
-    <div *ngIf="errorMessage" class="error-message">
-      <p>{{ errorMessage }}</p>
-    </div>
-  </div>
-   -->
+
 
    <div class="form-container">
     <h2>GitHub Authentication</h2>
   
-    <!-- Text Field and Button Side by Side -->
     <div class="input-button-group">
       <tds-text-field  
         type="text" 
@@ -42,7 +26,6 @@
       </tds-button>
     </div>
   
-    <!-- Accordion for Support Information -->
     <tds-accordion class="accordion-container">
       <tds-accordion-item>
         <div slot="header">

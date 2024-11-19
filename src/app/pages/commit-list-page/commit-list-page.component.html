@@ -1,4 +1,4 @@
-<div class="controls-wrapper">
+<!-- <div class="controls-wrapper">
   <div class="demo-wrapper dropdown-wrapper">
     <tds-dropdown
       id="repo-dropdown"
@@ -80,4 +80,33 @@
 
 <div *ngIf="errorMessage" class="error">
   {{ errorMessage }}
+</div> -->
+
+
+<div class="controls-wrapper">
+  <app-filter-controls
+  [repositories]="repositories"
+  [(selectedRepository)]="selectedRepository"
+  (filterChanged)="onFilterChanged($event)"
+></app-filter-controls>
+
+
 </div>
+
+<div *ngIf="loading" class="loading-spinner">Loading commits...</div>
+
+<div *ngIf="filteredGroupedCommits.length; else noCommits">
+  <app-commit-list [commits]="filteredPagedCommits"></app-commit-list>
+  <app-paginator
+    [length]="filteredGroupedCommits.length"
+    [pageSize]="pageSize"
+    [currentPage]="currentPage"
+    (pageChanged)="onPageChange($event)"
+  ></app-paginator>
+</div>
+
+<ng-template #noCommits>
+  <p>No commits available.</p>
+</ng-template>
+
+<div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>

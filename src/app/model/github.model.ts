@@ -84,6 +84,7 @@ export interface GithubRepository {
 
 export interface Commit {
   sha: string;
+  html_url: string;
   committer: {
     name: string;
     avatar_url: string;
@@ -96,10 +97,10 @@ export interface Commit {
       date: string;
     };
   };
-  html_url: string;
-  authorText?: string; // extra
-  timeAgo?: string; // extra 
+  repository: string; //for filtering
+  timeAgo: string;
 }
+
 
 
 
