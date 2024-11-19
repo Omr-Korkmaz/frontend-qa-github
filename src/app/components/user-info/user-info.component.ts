@@ -7,16 +7,8 @@ import { CommonModule } from '@angular/common';
   selector: 'app-user-info',
   standalone: true,
   imports: [CommonModule], 
-
-  template: `
-    <div *ngIf="userInfo">
-      <h3>User Info</h3>
-      <p><strong>Followers:</strong> {{ userInfo.followers }}</p>
-      <p><strong>Following:</strong> {{ userInfo.following }}</p>
-      <p><strong>Location:</strong> {{ userInfo.location || 'Not provided' }}</p>
-    </div>
-  `,
-  styles: ['/* styles */']
+  templateUrl: './user-info.component.html', 
+  styleUrls: ['./user-info.component.scss'] 
 })
 export class UserInfoComponent {
   @Input() userInfo!: GithubUser;
