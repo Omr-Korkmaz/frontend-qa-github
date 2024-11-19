@@ -1,63 +1,120 @@
-.repo-selector {
-    margin-bottom: 1em;
-  
-    label {
-      font-weight: bold;
-    }
-  
-    select {
-      margin-left: 0.5em;
-      padding: 0.5em;
-      font-size: 1em;
-    }
+.controls-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 20px; 
+}
+
+.dropdown-wrapper {
+  margin: 10px 0; 
+  max-width: 300px; 
+}
+
+.search-commit-wrapper {
+  margin: 10px 0; 
+  width: 100%;
+  max-width: 300px; 
+
+  tds-text-field {
+    width: 100%;
   }
-  
-  .commit-search {
-    margin-bottom: 1em;
+}
+
+.button-wrapper {
+  margin: 10px 0; 
+  width: 100%;
+  max-width: 300px;
+
+  tds-button {
+    width: 100%; 
+  }
+}
+
+.loading-spinner {
+  text-align: center;
+  font-size: 16px;
+  color: #007bff;
+  margin: 20px;
+}
+
+.commit-group {
+  margin: 20px;
+
+  .commit-date {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+  }
+
+  .commit {
     display: flex;
-  
-    .search-input {
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+
+    .avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .commit-details {
       flex: 1;
-      padding: 0.5em;
-      font-size: 1em;
-    }
-  }
-  
-  .commit-group {
-    margin-bottom: 1.5em;
-  
-    .commit-date {
-      font-weight: bold;
-      margin-bottom: 0.5em;
-    }
-  
-    .commit {
-      display: flex;
-      align-items: center;
-      margin-bottom: 1em;
-  
-      .avatar {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        margin-right: 1em;
+
+      .commit-message {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 5px;
       }
-  
-      .commit-details {
-        .commit-message {
-          font-weight: bold;
-        }
-  
-        .commit-author {
-          font-size: 0.9em;
-          color: gray;
-        }
-  
-        .commit-link {
-          color: blue;
+
+      .commit-author {
+        font-size: 14px;
+        color: #666;
+      }
+
+      .commit-link {
+        font-size: 14px;
+        color: #007bff;
+        text-decoration: none;
+
+        &:hover {
           text-decoration: underline;
         }
       }
     }
   }
-  
+}
+
+.paginator-wrapper {
+  margin-top: 20px; 
+  display: flex;
+  justify-content: center; 
+
+  mat-paginator {
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1); 
+    border-radius: 8px; 
+    padding: 10px 20px; 
+
+    .mat-paginator-page-size {
+      margin-right: 15px;
+    }
+  }
+}
+.error {
+  color: red;
+  font-weight: bold;
+  text-align: center;
+  margin: 20px;
+}
+ng-template p {
+  text-align: center;
+  font-size: 16px;
+  color: #666;
+}

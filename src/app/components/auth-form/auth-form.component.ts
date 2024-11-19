@@ -5,11 +5,13 @@ import { Router } from '@angular/router';
 import { AuthGithubService } from '../../services/auth-github.service';
 import { UserService } from '../../services/user.service';
 import { GithubUser } from '../../model/github.model';
+import { TegelModule } from '@scania/tegel-angular-17';
+
 
 @Component({
   selector: 'app-auth-form',
   standalone: true,
-  imports: [FormsModule, CommonModule], 
+  imports: [FormsModule, CommonModule,TegelModule], 
   templateUrl: './auth-form.component.html',
   styleUrls: ['./auth-form.component.scss'],
 })

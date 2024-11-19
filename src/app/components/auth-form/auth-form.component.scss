@@ -1,44 +1,107 @@
-.form-container {
-    width: 300px;
-    margin: 50px auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-  }
+// .form-container {
+//     width: 300px;
+//     margin: 50px auto;
+//     padding: 20px;
+//     border: 1px solid #ccc;
+//     border-radius: 8px;
+//   }
   
+//   h2 {
+//     text-align: center;
+//   }
+  
+//   label {
+//     display: block;
+//     margin-bottom: 10px;
+//   }
+  
+//   input {
+//     width: 100%;
+//     padding: 8px;
+//     margin: 5px 0 15px;
+//     border: 1px solid #ccc;
+//     border-radius: 4px;
+//   }
+  
+//   button {
+//     width: 100%;
+//     padding: 10px;
+//     background-color: #4CAF50;
+//     color: white;
+//     border: none;
+//     border-radius: 4px;
+//     cursor: pointer;
+//   }
+  
+//   button:hover {
+//     background-color: #45a049;
+//   }
+  
+//   button:disabled {
+//     background-color: #ccc;
+//     cursor: not-allowed;
+//   }
+.form-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #bae0f0;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
   h2 {
     text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    color: #333;
   }
-  
-  label {
-    display: block;
-    margin-bottom: 10px;
+
+  .input-button-group {
+    display: flex;
+    gap: 1rem; // Space between the input and button
+    align-items: flex-end; // Align button with bottom of input field
+
+    tds-text-field {
+      flex: 1; // Make the input field grow to take available space
+    }
+
+    tds-button {
+      white-space: nowrap; // Prevent the button text from wrapping
+    }
   }
-  
-  input {
-    width: 100%;
-    padding: 8px;
-    margin: 5px 0 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+
+  .accordion-container {
+    margin-top: 1.5rem;
+
+    tds-accordion-item {
+      div[slot="header"] {
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+
+        tds-icon {
+          margin-right: 0.5rem;
+        }
+      }
+
+      p {
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+      }
+
+      ol {
+        padding-left: 1.5rem;
+        font-size: 0.9rem;
+      }
+
+      a {
+        color: #007bff;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
   }
-  
-  button {
-    width: 100%;
-    padding: 10px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #45a049;
-  }
-  
-  button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
-  
+}
