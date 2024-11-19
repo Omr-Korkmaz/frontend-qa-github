@@ -3,16 +3,16 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthGithubService } from '../../services/auth-github.service';
 import { Commit, GithubRepository } from '../../model/github.model';
-import { UserService } from '../../services/user.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { RepositorySelectorComponent } from '../../components/repository-selector/repository-selector.component';
 import * as timeago from 'timeago.js';
 import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-commit-list-page',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, RepositorySelectorComponent],
   templateUrl: './commit-list-page.component.html',
   styleUrls: ['./commit-list-page.component.scss'],
 })
@@ -22,8 +22,9 @@ export class CommitListPageComponent implements OnInit {
   groupedCommits: { date: string; commits: Commit[] }[] = [];
   filteredGroupedCommits: { date: string; commits: Commit[] }[] = [];
   searchTerm: string = '';
+  sortOrder: 'asc' | 'desc' = 'desc';
   errorMessage: string = '';
-  allCommits: Commit[] = []; 
+  allCommits: Commit[] = [];
 
   constructor(
     private authGithubService: AuthGithubService,
@@ -58,7 +59,8 @@ export class CommitListPageComponent implements OnInit {
   resetFilters(): void {
     this.selectedRepository = '';
     this.searchTerm = '';
-    this.groupCommitsByDate(this.allCommits); 
+    this.sortOrder = 'desc';
+    this.groupCommitsByDate(this.allCommits);
   }
 
   getAllCommits(): void {
@@ -167,11 +169,16 @@ export class CommitListPageComponent implements OnInit {
     this.filteredGroupedCommits = this.sortCommitsByDate(filteredCommits);
   }
 
+  // Sort grouped commits by date based on selected sort order
   sortCommitsByDate(groups: { date: string; commits: Commit[] }[]): { date: string; commits: Commit[] }[] {
     return groups.sort((a, b) => {
       const dateA = new Date(a.date).getTime();
       const dateB = new Date(b.date).getTime();
-      return dateB - dateA;
+      return this.sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
     });
+  }
+
+  sortCommits(): void {
+    this.filteredGroupedCommits = this.sortCommitsByDate(this.filteredGroupedCommits);
   }
 }

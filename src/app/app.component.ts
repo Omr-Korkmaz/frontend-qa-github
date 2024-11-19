@@ -6,10 +6,8 @@ import { NavigationMenuComponent } from './components/navigation-menu/navigation
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, TegelModule, NavigationMenuComponent ],
+  imports: [RouterOutlet, TegelModule, NavigationMenuComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
-  title = 'frontend-qa-github';
-}
+export class AppComponent {}

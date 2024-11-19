@@ -1,4 +1,4 @@
-<div class="repo-selector">
+ <div class="repo-selector">
     <label for="repo-select">Filter by Repository:</label>
     <select
       id="repo-select"
@@ -13,17 +13,25 @@
     <button (click)="resetFilters()" class="reset-button">Reset</button>
   </div>
   
-  <div *ngIf="groupedCommits.length; else noCommits">
-    <div class="commit-search">
-      <input
-        type="text"
-        placeholder="Search commits by message, author, or SHA"
-        [(ngModel)]="searchTerm"
-        (input)="filterCommits()"
-        class="search-input"
-      />
-    </div>
+  <div class="commit-search">
+    <input
+      type="text"
+      placeholder="Search commits by message, author, or SHA"
+      [(ngModel)]="searchTerm"
+      (input)="filterCommits()"
+      class="search-input"
+    />
+  </div>
   
+  <div class="sorter">
+    <label for="sort-date">Sort by Date:</label>
+    <select id="sort-date" [(ngModel)]="sortOrder" (change)="sortCommits()">
+      <option value="desc">Newest First</option>
+      <option value="asc">Oldest First</option>
+    </select>
+  </div>
+  
+  <div *ngIf="groupedCommits.length; else noCommits">
     <div *ngFor="let group of filteredGroupedCommits" class="commit-group">
       <h3 class="commit-date">{{ group.date }}</h3>
       <div *ngFor="let commit of group.commits" class="commit">

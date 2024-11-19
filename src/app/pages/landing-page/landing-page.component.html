@@ -1,1 +1,21 @@
-<p>landing-page works!</p>
+<div class="landing-container">
+    <h2>Welcome to GitHub Dashboard</h2>
+    <p>Please enter your credentials to authenticate:</p>
+  
+    <label for="token">
+      GitHub Personal Access Token:
+      <input
+        id="token"
+        type="text"
+        [(ngModel)]="token"
+        placeholder="Enter your GitHub Token"
+      />
+    </label>
+  
+    <button (click)="authenticate()">Login</button>
+  
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+  </div>
+  
