@@ -16,15 +16,15 @@
 
   .input-button-group {
     display: flex;
-    gap: 1rem; 
-    align-items: flex-end; 
+    gap: 1rem;
+    align-items: flex-end;
 
     tds-text-field {
-      flex: 1; 
+      flex: 1;
     }
 
     tds-button {
-      white-space: nowrap; 
+      white-space: nowrap;
     }
   }
 
@@ -60,6 +60,32 @@
           text-decoration: underline;
         }
       }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center;
+
+  }
+
+  .input-button-group {
+    flex-direction: column;
+    align-items: center;
+
+    tds-text-field,
+    tds-button {
+      width: 100%; 
+      max-width: 300px;
+    }
+
+    tds-button {
+      margin-top: 1rem;
     }
   }
 }
