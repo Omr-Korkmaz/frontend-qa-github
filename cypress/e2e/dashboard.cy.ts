@@ -1,15 +1,11 @@
 describe('Dashboard Component Validation with Mock Data', () => {
   beforeEach(() => {
-    // Intercept user info request
     cy.intercept('GET', '**/user', { fixture: 'user.json' }).as('getUser');
 
-    // Intercept repositories request
     cy.intercept('GET', '**/user/repos', { fixture: 'repositories.json' }).as('getRepos');
 
-    // Intercept languages request
     cy.intercept('GET', '**/repos/**/languages', { fixture: 'languages.json' }).as('getLanguages');
 
-    // Simulate token-based login using mock data
     cy.visit('/auth');
     cy.get('[data-testid="token-input"]').type('mock-valid-token');
     cy.get('[data-testid="submit-button"]').click();
