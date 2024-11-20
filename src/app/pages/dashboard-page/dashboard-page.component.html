@@ -5,7 +5,7 @@
   <ng-container *ngIf="userInfo; else loading">
     <tds-block mode-variant="primary" data-testid="user-info-block">
       <p class="tds-body-01">
-        <strong>Public Repos:</strong> {{ userInfo.public_repos }} <br />
+        <!-- <strong>Public Repos:</strong> {{ userInfo.public_repos }} <br /> -->
         <strong>Bio:</strong> {{ userInfo.bio || 'No bio available' }} <br />
         <strong>Location:</strong> {{ userInfo.location || 'Not provided' }}
       </p>
