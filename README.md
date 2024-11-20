@@ -25,3 +25,62 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+# GitHub Insights Dashboard
+
+## 1. Introduction
+The GitHub Insights Dashboard is a web application designed to fetch and display data from GitHub's public API. It provides users with a comprehensive overview of their GitHub activity through visual charts and detailed lists.
+
+## 2. Features and Functionality
+
+### 2.1 Dashboard Page
+Once authenticated, users are directed to the **Dashboard Page**, which provides an overview of their GitHub activity. Key features include:
+
+- **Commit Frequency**:  
+  A bar chart displaying the number of commits made each month.
+
+- **Programming Languages**:  
+  A pie chart showing the distribution of programming languages used in the user’s repositories.
+
+- **Summary Tile**:  
+  Key metrics including:
+  - Total number of repositories.
+  - Number of followers.
+  - Number of users the account is following.
+
+- **Repository List**:  
+  A list of all repositories owned by the user or organization.
+
+### 2.2 Commit List Page
+The **Commit List Page** provides detailed commit data and filtering options:
+
+- **Searchable Commit List**:  
+  Search commits by:
+  - Commit message.
+  - Date.
+  - Repository name.
+
+- **Date Categorization**:  
+  Commits are grouped by date for easy tracking of daily contributions.
+
+- **Pagination**:  
+  Commits are displayed with pagination, allowing users to navigate through data by date (not commit by commit) .
+
+- **Commit Details**:  
+  Clicking on a commit opens its detailed view on GitHub.
+
+---
+
+## 3. Additional Features
+
+### 3.1 Auto-Refresh
+The dashboard automatically refreshes every 15 minutes to fetch the latest data from GitHub.
+
+### 3.2 Responsive Design
+The application is  responsive, providing an optimal experience on desktops, tablets, and mobile devices.
+
+### 3.3 Quality Assurance
+
+---
+
+## 4. Deployment and Setup
