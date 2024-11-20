@@ -117,7 +117,6 @@ export class CommitListPageComponent implements OnInit {
   
 
     resetFilters(): void {
-      console.log('CommitListPageComponent: Reset filters');
       this.selectedRepository = '';
       this.groupCommitsByDate(this.allCommits);
       this.updatePagedCommits();
@@ -274,9 +273,6 @@ updatePagedCommits(): void {
   const startIndex = this.currentPage * this.pageSize;
   const endIndex = startIndex + this.pageSize;
   this.filteredPagedCommits = this.filteredGroupedCommits.slice(startIndex, endIndex);
-  
-  console.log(`Slicing commits from ${startIndex} to ${endIndex}`);
-  console.log('Filtered Paged Commits:', this.filteredPagedCommits);
 }
 
   

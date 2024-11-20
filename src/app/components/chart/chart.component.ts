@@ -27,7 +27,6 @@ export class ChartComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['chartData'] || changes['chartLabels']) {
-      console.log('Data or Labels changed. Re-rendering chart...');
       this.renderChart();
     }
   }

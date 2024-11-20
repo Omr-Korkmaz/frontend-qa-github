@@ -24,7 +24,6 @@ export class NavigationMenuComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.userService.userInfo$.subscribe((userInfo) => {
         this.userInfo = userInfo; 
-        console.log('Updated user info:', this.userInfo);
       })
     );
   }

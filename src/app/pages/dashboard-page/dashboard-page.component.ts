@@ -155,9 +155,7 @@ export class DashboardPageComponent implements OnInit {
     this.languageChartData = (Object.values(this.languageStats) as number[]).map((bytes) =>
       Number(((bytes / totalBytes) * 100).toFixed(2))
     );
-  
-    console.log('Language Chart Labels:', this.languageChartLabels); 
-    console.log('Language Chart Data:', this.languageChartData); 
+
   }
   
   navigateToAllCommits() {

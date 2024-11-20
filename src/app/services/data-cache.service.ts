@@ -14,13 +14,11 @@ export class DataCacheService {
 
   getData(key: string): Observable<any> {
     if (this.memoryCache[key]) {
-      console.log(`Returning ${key} data from memory cache`);
       return of(this.memoryCache[key]);
     }
 
     const cachedData = localStorage.getItem(`${this.LOCAL_STORAGE_KEY}_${key}`);
     if (cachedData) {
-      console.log(`Returning ${key} data from localStorage cache`);
       this.memoryCache[key] = JSON.parse(cachedData); 
       return of(JSON.parse(cachedData));
     }
@@ -32,12 +30,10 @@ export class DataCacheService {
   cacheData(key: string, data: any): void {
     this.memoryCache[key] = data; 
     localStorage.setItem(`${this.LOCAL_STORAGE_KEY}_${key}`, JSON.stringify(data)); 
-    console.log(`${key} data cached successfully`);
   }
 
   clearCache(): void {
     this.memoryCache = {};
     localStorage.clear();
-    console.log('Cache cleared');
   }
 }
