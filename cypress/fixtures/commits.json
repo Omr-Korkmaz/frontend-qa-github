@@ -1,63 +1,29 @@
 [
-    {
-      "sha": "1a2b3c",
-      "commit": {
-        "message": "Initial commit",
-        "author": {
-          "name": "John Doe",
-          "email": "john@example.com",
-          "date": "2024-01-01T10:00:00Z"
-        },
-        "committer": {
-          "name": "John Doe",
-          "email": "john@example.com",
-          "date": "2024-01-01T10:00:00Z"
-        }
-      },
-      "html_url": "https://github.com/user/repo/commit/1a2b3c",
-      "committer": {
-        "avatar_url": "https://example.com/avatar1.png"
-      }
+  {
+    "sha": "1a2b3c",
+    "commit": {
+      "message": "Initial commit",
+      "author": { "name": "John Doe", "email": "john@example.com", "date": "2024-01-01T10:00:00Z" }
     },
-    {
-      "sha": "4d5e6f",
-      "commit": {
-        "message": "Add README.md",
-        "author": {
-          "name": "Jane Smith",
-          "email": "jane@example.com",
-          "date": "2024-01-05T14:30:00Z"
-        },
-        "committer": {
-          "name": "Jane Smith",
-          "email": "jane@example.com",
-          "date": "2024-01-05T14:30:00Z"
-        }
-      },
-      "html_url": "https://github.com/user/repo/commit/4d5e6f",
-      "committer": {
-        "avatar_url": "https://example.com/avatar2.png"
-      }
+    "html_url": "https://github.com/user/repo/commit/1a2b3c",
+    "committer": { "avatar_url": "https://example.com/avatar1.png" }
+  },
+  {
+    "sha": "4d5e6f",
+    "commit": {
+      "message": "Add README.md",
+      "author": { "name": "Jane Smith", "email": "jane@example.com", "date": "2024-01-05T14:30:00Z" }
     },
-    {
-      "sha": "7g8h9i",
-      "commit": {
-        "message": "Fix bug in authentication flow",
-        "author": {
-          "name": "Alice Johnson",
-          "email": "alice@example.com",
-          "date": "2024-02-10T09:45:00Z"
-        },
-        "committer": {
-          "name": "Alice Johnson",
-          "email": "alice@example.com",
-          "date": "2024-02-10T09:45:00Z"
-        }
-      },
-      "html_url": "https://github.com/user/repo/commit/7g8h9i",
-      "committer": {
-        "avatar_url": "https://example.com/avatar3.png"
-      }
-    }
-  ]
-  
+    "html_url": "https://github.com/user/repo/commit/4d5e6f",
+    "committer": { "avatar_url": "https://example.com/avatar2.png" }
+  },
+  {
+    "sha": "7g8h9i",
+    "commit": {
+      "message": "Fix bug in authentication flow",
+      "author": { "name": "Alice Johnson", "email": "alice@example.com", "date": "2024-02-10T09:45:00Z" }
+    },
+    "html_url": "https://github.com/user/repo/commit/7g8h9i",
+    "committer": { "avatar_url": "https://example.com/avatar3.png" }
+  }
+]

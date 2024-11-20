@@ -7,7 +7,7 @@ describe('Authentication Flow', () => {
         req.reply({ statusCode: 401, body: { message: 'Bad credentials' } });
       }
     }).as('getUser');
-    cy.visit('/auth');
+    cy.visit('/auth-form');
   });
 
   it('Should display error for invalid token', () => {

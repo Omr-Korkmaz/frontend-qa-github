@@ -19,7 +19,8 @@ yarn-error.log
 *.launch
 .settings/
 *.sublime-workspace
-
+/cypress.env.json
+.cypress.env.json
 
 # Visual Studio Code
 .vscode/*
