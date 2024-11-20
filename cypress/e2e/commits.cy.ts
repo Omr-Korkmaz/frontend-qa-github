@@ -1,27 +1,19 @@
-describe('Commit List Navigation', () => {
-    beforeEach(() => {
-      // Log in and navigate to commit list
-      cy.visit('/auth');
-      cy.get('input#token').type('VALID_GITHUB_TOKEN');
-      cy.contains('Authenticate with GitHub').click();
-      cy.url().should('include', '/dashboard');
-  
-      cy.contains('Commits').click(); // Navigate to commits page
-      cy.url().should('include', '/commit-list');
-    });
-  
-    it('should display commits grouped by date', () => {
-      cy.get('.commit-group').should('exist'); // Ensure grouped commits exist
-    });
-  
-    it('should search commits based on message or author', () => {
-      cy.get('input#search').type('Initial commit');
-      cy.get('.commit-item').should('contain', 'Initial commit');
-    });
-  
-    it('should navigate back to dashboard', () => {
-      cy.contains('Home').click();
-      cy.url().should('include', '/dashboard');
-    });
+describe('Commit Search and Navigation', () => {
+  beforeEach(() => {
+    cy.login(Cypress.env('github_token'));
+    cy.intercept('GET', '**/user/repos', { fixture: 'repositories.json' }).as('getRepos');
+    cy.visit('/commit-list');
   });
-  
+
+  it('Should search for commits by message', () => {
+    cy.get('[data-testid="search-input"]').type('Fix issue');
+    cy.get('[data-testid="commit-card"]').should('contain', 'Fix issue #123');
+  });
+
+  it('Should navigate to the third commit GitHub page', () => {
+    cy.get('[data-testid="commit-card"]').eq(2).within(() => {
+      cy.get('[data-testid="commit-link"]').click();
+    });
+    cy.url().should('include', 'github.com');
+  });
+});

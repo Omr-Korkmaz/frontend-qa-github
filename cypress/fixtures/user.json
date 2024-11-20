@@ -1,0 +1,10 @@
+{
+  "login": "testuser",
+  "name": "Test User",
+  "avatar_url": "https://example.com/avatar.jpg",
+  "public_repos": 10,
+  "followers": 5,
+  "following": 3,
+  "bio": " test bio",
+  "location": "test City"
+}

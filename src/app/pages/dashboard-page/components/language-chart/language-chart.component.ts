@@ -1,20 +1,12 @@
 import { Component, Input } from '@angular/core';
-import { ChartComponent } from '../../../../components/chart/chart.component'; 
+import { ChartComponent } from '../../../../components/chart/chart.component';
 
 @Component({
   selector: 'app-language-chart',
   standalone: true,
   imports: [ChartComponent],
-  template: `
-    <app-chart
-      [chartId]="'languageUsageChart'"
-      [chartType]="'pie'"
-      [chartData]="chartData"
-      [chartLabels]="chartLabels"
-      [chartTitle]="'Programming Language Usage'"
-    ></app-chart>
-  `,
-  styles: ['/* styles */']
+  templateUrl: './language-chart.component.html',
+  styleUrls: ['./language-chart.component.scss']
 })
 export class LanguageChartComponent {
   @Input() chartData: number[] = [];

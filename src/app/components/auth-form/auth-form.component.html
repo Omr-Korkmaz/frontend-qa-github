@@ -1,31 +1,35 @@
-
-
-   <div class="form-container">
+ <div class="form-container">
     <h2>GitHub Authentication</h2>
   
     <div class="input-button-group">
-      <tds-text-field  
-        type="text" 
-        size="lg" 
-        label="GitHub Personal Access Token" 
-        label-position="inside" 
-        placeholder="Enter your GitHub Token" 
+      <tds-text-field
+        data-testid="token-input"
+        type="text"
+        size="lg"
+        label="GitHub Personal Access Token"
+        label-position="inside"
+        placeholder="Enter your GitHub Token"
         [(ngModel)]="token"
-        state="{{ errorMessage ? 'error' : 'default' }}" 
-        helper="{{ errorMessage ? errorMessage : '' }}">
-        <tds-icon slot="suffix" name="lock" size="20px"></tds-icon> 
+        [state]="errorMessage ? 'error' : 'default'"
+        [helper]="errorMessage">
+        <tds-icon slot="suffix" name="lock" size="20px"></tds-icon>
       </tds-text-field>
   
-      <tds-button 
-        type="button" 
-        variant="primary" 
-        size="lg" 
+      <tds-button
+        data-testid="submit-button"
+        type="button"
+        variant="primary"
+        size="lg"
         (click)="authenticate()"
         text="Submit">
         <tds-icon slot="icon" size="20px" name="chevron_right"></tds-icon>
       </tds-button>
     </div>
   
+    <div data-testid="error-message" *ngIf="errorMessage" class="error">
+      {{ errorMessage }}
+    </div>
+
     <tds-accordion class="accordion-container">
       <tds-accordion-item>
         <div slot="header">

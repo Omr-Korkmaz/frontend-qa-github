@@ -1,0 +1,39 @@
+.paginator-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #ffffff;
+    padding: 10px;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+  
+    @media (max-width: 768px) {
+      padding: 8px;
+      box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
+    }
+  
+    @media (max-width: 480px) {
+      flex-direction: column;
+      padding: 6px;
+    }
+  }
+  
+  mat-paginator {
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 10px 20px;
+  
+    @media (max-width: 768px) {
+      padding: 8px 16px;
+    }
+  
+    @media (max-width: 480px) {
+      padding: 6px 12px;
+      width: 100%; 
+    }
+  }
+  

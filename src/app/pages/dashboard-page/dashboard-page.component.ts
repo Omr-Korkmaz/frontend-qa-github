@@ -6,7 +6,6 @@ import { UserInfoComponent } from '../../components/user-info/user-info.componen
 import { RepositoryListComponent } from './components/repository-list/repository-list.component';
 import { CommitStatsComponent } from './components/commit-stats/commit-stats.component';
 import { CommonModule } from '@angular/common';
-import { PLanguageUsageComponent } from './components/p-language-usage/p-language-usage.component';
 import { TegelModule } from '@scania/tegel-angular-17';
 import { FormsModule } from '@angular/forms';
 import { ChartComponent } from '../../components/chart/chart.component';
@@ -17,7 +16,6 @@ import { catchError, forkJoin, of } from 'rxjs';
   standalone: true,
   imports: [
     UserInfoComponent,
-    PLanguageUsageComponent,
     RepositoryListComponent,
     CommitStatsComponent,
     CommonModule,

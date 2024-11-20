@@ -271,15 +271,25 @@ export class AuthGithubService {
     );
   }
 
-  getUserInfo(): Observable<GithubUser> {
+  // getUserInfo(): Observable<GithubUser> {
+  //   const url = `${this.baseUrl}/user`;
+  //   return this.http.get<GithubUser>(url, { headers: this.getHeaders() }).pipe(
+  //     catchError((error) => {
+  //       console.error('Error fetching user info:', error);
+  //       return of({} as GithubUser);
+  //     })
+  //   );
+  // }
+  getUserInfo(): Observable<GithubUser | null> {
     const url = `${this.baseUrl}/user`;
     return this.http.get<GithubUser>(url, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
         console.error('Error fetching user info:', error);
-        return of({} as GithubUser);
+        return of(null); // Return null on failure
       })
     );
   }
+  
 
   private handleCommitError(error: HttpErrorResponse): Observable<Commit[]> {
     if (error.status === 409) {

@@ -1,4 +1,4 @@
-<div *ngFor="let group of commits" class="commit-group">
+ <div *ngFor="let group of commits" class="commit-group">
     <h3 class="commit-date">{{ group.date }}</h3>
     <app-commit-card *ngFor="let commit of group.commits" [commit]="commit">
     </app-commit-card>

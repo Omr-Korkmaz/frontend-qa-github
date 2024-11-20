@@ -103,12 +103,11 @@ export class CommitListPageComponent implements OnInit {
     this.currentPage = 0; // Reset pagination
   
     if (!repoName) {
-      // If no repository is selected, reset to all commits
       this.groupCommitsByDate(this.allCommits);
     } else {
       const filteredCommits = this.allCommits.filter(
         (commit) => commit.repository === repoName
-      ); // Assuming your Commit model has a repository property
+      );
   
       this.groupCommitsByDate(filteredCommits);
     }
@@ -117,12 +116,6 @@ export class CommitListPageComponent implements OnInit {
   }
   
 
-  // resetFilters(): void {
-  //   this.selectedRepository = '';
-  //   this.searchTerm = '';
-  //   this.groupCommitsByDate(this.allCommits); 
-  //   this.updatePagedCommits(); 
-  // }resetFilters(): void {
     resetFilters(): void {
       console.log('CommitListPageComponent: Reset filters');
       this.selectedRepository = '';
@@ -133,38 +126,6 @@ export class CommitListPageComponent implements OnInit {
     
 
   
-
-  // getAllCommits(): void {
-  //   this.authGithubService.getRepositories().subscribe({
-  //     next: (repos: GithubRepository[]) => {
-  //       const commitRequests = repos.map((repo) =>
-  //         this.authGithubService.fetchAllCommits(repo.owner.login, repo.name)
-  //       );
-
-  //       forkJoin(commitRequests).subscribe({
-  //         next: (allCommitsArray: Commit[][]) => {
-  //           this.allCommits = allCommitsArray.flat();
-  //           if (this.allCommits.length === 0) {
-  //             this.errorMessage = 'No commits found in any repository.';
-  //           } else {
-
-  //             this.groupCommitsByDate(this.allCommits);
-  //             this.updatePagedCommits(); // Immediately display first page
-  //           }
-  //         },
-  //         error: (error) => {
-  //           console.error('Error fetching all commits:', error);
-  //           this.errorMessage = 'Error fetching all commits.';
-  //         },
-  //       });
-  //     },
-  //     error: (error) => {
-  //       console.error('Error fetching repositories:', error);
-  //       this.errorMessage = 'Error fetching repositories.';
-  //     },
-  //   });
-  // }
-
 
   getAllCommits(): void {
     this.authGithubService.getRepositories().subscribe({
@@ -227,10 +188,10 @@ export class CommitListPageComponent implements OnInit {
             },
           },
           timeAgo: timeago.format(commit.commit.author.date),
-          repository: repositoryName, // Add repository name here
+          repository: repositoryName, 
         }));
   
-        this.groupCommitsByDate(commits); // Now the Commit type is satisfied
+        this.groupCommitsByDate(commits); 
         this.updatePagedCommits();
       },
       error: (error) => {
@@ -262,7 +223,7 @@ export class CommitListPageComponent implements OnInit {
     this.selectedRepository = filters.selectedRepository;
     this.searchTerm = filters.searchTerm;
 
-    this.filterCommits(); // Apply filters to the commits
+    this.filterCommits(); 
   }
 
   filterCommits(): void {

@@ -1,112 +1,30 @@
-<!-- <div class="controls-wrapper">
-  <div class="demo-wrapper dropdown-wrapper">
-    <tds-dropdown
-      id="repo-dropdown"
-      placeholder="Filter by Repository"
-      size="lg"
-      open-direction="auto"
-      [(ngModel)]="selectedRepository"
-      (tdsChange)="selectRepository($event.detail.value)"
-    >
-      <tds-dropdown-option value="">All Repositories</tds-dropdown-option>
-      <tds-dropdown-option
-        *ngFor="let repo of repositories"
-        [value]="repo.name"
-      >
-        {{ repo.name }}
-      </tds-dropdown-option>
-    </tds-dropdown>
-  </div>
 
-  <div class="demo-wrapper search-commit-wrapper">
-    <tds-text-field
-      type="text"
-      size="lg"
-      state="default"
-      no-min-width
-      placeholder="Search Commits"
-      [(ngModel)]="searchTerm"
-      (tdsInput)="filterCommits()"
-    ></tds-text-field>
-  </div>
-
-  <div class="demo-wrapper button-wrapper">
-    <tds-button
-      type="button"
-      variant="primary"
-      size="lg"
-      text="Reset"
-      (click)="resetFilters()"
-    ></tds-button>
-  </div>
-</div>
-
-<div *ngIf="loading" class="loading-spinner">
-  Loading commits...
+<div class="controls-wrapper" data-testid="filter-controls">
+  <app-filter-controls
+    [repositories]="repositories"
+    [(selectedRepository)]="selectedRepository"
+    (filterChanged)="onFilterChanged($event)">
+  </app-filter-controls>
 </div>
 <div style="width: 100%">
   <tds-divider orientation="horizontal"></tds-divider>
 </div>
-<div *ngIf="filteredGroupedCommits.length; else noCommits">
-  <div *ngFor="let group of filteredPagedCommits" class="commit-group">
-    <h3 class="commit-date">{{ group.date }}</h3>
-    <div *ngFor="let commit of group.commits" class="commit">
-      <img [src]="commit.committer.avatar_url" alt="Avatar" class="avatar" />
-      <div class="commit-details">
-        <p class="commit-message">{{ commit.commit.message }}</p>
-        <p class="commit-author">
-          {{ commit.commit.author.name }} authored {{ commit.timeAgo }}
-        </p>
-        <a [href]="commit.html_url" target="_blank" class="commit-link">View Commit</a>
-      </div>
-    </div>
-  </div>
 
-  <div class="paginator-wrapper">
-    <mat-paginator
-      [length]="filteredGroupedCommits.length"
-      [pageSize]="pageSize"
-      [pageSizeOptions]="[2, 4, 5]"
-      [pageIndex]="currentPage"
-      (page)="onPageChange($event)"
-    >
-    </mat-paginator>
-  </div>
-</div>
+<div *ngIf="loading" class="loading-spinner" data-testid="loading-spinner">Loading commits...</div>
 
-<ng-template #noCommits>
-  <p>No commits available.</p>
-</ng-template>
-
-<div *ngIf="errorMessage" class="error">
-  {{ errorMessage }}
-</div> -->
-
-
-<div class="controls-wrapper">
-  <app-filter-controls
-  [repositories]="repositories"
-  [(selectedRepository)]="selectedRepository"
-  (filterChanged)="onFilterChanged($event)"
-></app-filter-controls>
-
-
-</div>
-
-<div *ngIf="loading" class="loading-spinner">Loading commits...</div>
-
-<div *ngIf="filteredGroupedCommits.length; else noCommits">
-  <app-commit-list [commits]="filteredPagedCommits"></app-commit-list>
+<div class="commit-container" *ngIf="filteredGroupedCommits.length; else noCommits" data-testid="commit-container">
+  <app-commit-list class="commit-section" [commits]="filteredPagedCommits"></app-commit-list>
   <app-paginator
     [length]="filteredGroupedCommits.length"
     [pageSize]="pageSize"
     [currentPage]="currentPage"
     (pageChanged)="onPageChange($event)"
-  ></app-paginator>
+    data-testid="paginator">
+  </app-paginator>
 </div>
 
 <ng-template #noCommits>
-  <p>No commits available.</p>
+  <p class="no-commits" data-testid="no-commits-message">No commits available.</p>
 </ng-template>
 
-<div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+<div *ngIf="errorMessage" class="error" data-testid="error-message">{{ errorMessage }}</div>

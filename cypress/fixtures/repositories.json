@@ -1,0 +1,19 @@
+[
+    {
+      "id": 1,
+      "name": "repo-one",
+      "owner": { "login": "user" },
+      "html_url": "https://github.com/user/repo-one",
+      "description": "First repository",
+      "size": 123
+    },
+    {
+      "id": 2,
+      "name": "repo-two",
+      "owner": { "login": "user" },
+      "html_url": "https://github.com/user/repo-two",
+      "description": "Second repository",
+      "size": 0
+    }
+  ]
+  

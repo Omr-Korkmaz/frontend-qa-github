@@ -1,0 +1,31 @@
+.commit-group {
+  margin-bottom: 40px;
+
+  .commit-date {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+  }
+
+  @media (max-width: 768px) {
+    .commit-date {
+      font-size: 1.2rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .commit-date {
+      font-size: 1rem;
+      text-align: center; 
+    }
+  }
+
+  app-commit-card {
+    margin-bottom: 15px;
+
+    @media (max-width: 480px) {
+      margin-bottom: 10px;
+    }
+  }
+}

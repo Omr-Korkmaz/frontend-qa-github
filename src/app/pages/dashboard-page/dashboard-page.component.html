@@ -1,8 +1,9 @@
+
 <div class="dashboard-container">
-  <h2 class="tds-headline-02">GitHub Dashboard Summary</h2>
+  <h2 class="tds-headline-02" data-testid="dashboard-title">GitHub Dashboard Summary</h2>
 
   <ng-container *ngIf="userInfo; else loading">
-    <tds-block mode-variant="primary">
+    <tds-block mode-variant="primary" data-testid="user-info-block">
       <p class="tds-body-01">
         <strong>Public Repos:</strong> {{ userInfo.public_repos }} <br />
         <strong>Bio:</strong> {{ userInfo.bio || 'No bio available' }} <br />
@@ -12,22 +13,22 @@
 
     <div class="container">
       <div class="wrapper">
-        <tds-block mode-variant="primary">
+        <tds-block mode-variant="primary" data-testid="project-count-block">
           <p class="tds-body-01">Number of Projects</p>
           <h3 class="tds-headline-01">{{ repositories.length }}</h3>
         </tds-block>
 
-        <tds-block mode-variant="primary" (click)="navigateToAllCommits()">
+        <tds-block mode-variant="primary" (click)="navigateToAllCommits()" data-testid="total-commits-block">
           <p class="tds-body-01">Total Commits Across All Repositories</p>
           <h3 class="tds-headline-01">{{ totalCommits }}</h3>
         </tds-block>
 
-        <tds-block mode-variant="primary">
+        <tds-block mode-variant="primary" data-testid="followers-block">
           <p class="tds-body-01">Followers</p>
           <h3 class="tds-headline-01">{{ userInfo.followers }}</h3>
         </tds-block>
 
-        <tds-block mode-variant="primary">
+        <tds-block mode-variant="primary" data-testid="following-block">
           <p class="tds-body-01">Following</p>
           <h3 class="tds-headline-01">{{ userInfo.following }}</h3>
         </tds-block>
@@ -39,6 +40,7 @@
             [chartData]="barChartData"
             [chartLabels]="barChartLabels"
             chartTitle="Commits Per Month"
+            data-testid="bar-chart"
           ></app-chart>
         </div>
 
@@ -49,6 +51,7 @@
             [chartData]="languageChartData"
             [chartLabels]="languageChartLabels"
             chartTitle="Programming Language Usage"
+            data-testid="pie-chart"
           ></app-chart>
         </div>
       </div>
@@ -56,13 +59,13 @@
   </ng-container>
 
   <ng-template #loading>
-    <p>Loading user information...</p>
+    <p data-testid="loading-message">Loading user information...</p>
   </ng-template>
 
-  <div *ngIf="repositories?.length" class="repositories-container">
+  <div *ngIf="repositories?.length" class="repositories-container" data-testid="repositories-container">
     <h3 class="tds-headline-03">Repositories</h3>
     <ul class="repository-list">
-      <li *ngFor="let repo of repositories" (click)="selectRepository(repo)" class="repository-item">
+      <li *ngFor="let repo of repositories" (click)="selectRepository(repo)" class="repository-item" data-testid="repository-item">
         <div class="repo-name">{{ repo.name }}</div>
         <div class="repo-description">{{ repo.description || 'No description' }}</div>
         <span *ngIf="repo.isEmpty" class="repo-empty">(Empty repository)</span>

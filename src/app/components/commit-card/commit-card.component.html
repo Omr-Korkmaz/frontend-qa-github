@@ -1,11 +1,11 @@
-<div class="commit">
-    <img [src]="commit.committer.avatar_url" alt="Avatar" class="avatar" />
+<div class="commit" data-testid="commit-card">
+    <img [src]="commit.committer.avatar_url" alt="Avatar" class="avatar" data-testid="commit-avatar" />
     <div class="commit-details">
-      <p class="commit-message">{{ commit.commit.message }}</p>
-      <p class="commit-author">
+      <p class="commit-message" data-testid="commit-message">{{ commit.commit.message }}</p>
+      <p class="commit-author" data-testid="commit-author">
         {{ commit.commit.author.name }} authored {{ commit.timeAgo }}
       </p>
-      <a [href]="commit.html_url" target="_blank" class="commit-link">View Commit</a>
+      <a [href]="commit.html_url" target="_blank" class="commit-link" data-testid="commit-link">View Commit</a>
     </div>
   </div>
   
