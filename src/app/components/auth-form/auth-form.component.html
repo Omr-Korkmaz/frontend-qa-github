@@ -1,4 +1,4 @@
- <div class="form-container">
+ <!-- <div class="form-container">
     <h2>GitHub Authentication</h2>
   
     <div class="input-button-group">
@@ -49,6 +49,126 @@
             <li>Click "Generate new token", provide a name, and select necessary scopes.</li>
           </ol>
           <a href="https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token" target="_blank">
+            Learn more about GitHub Tokens
+          </a>
+        </div>
+      </tds-accordion-item>
+    </tds-accordion>
+  </div>
+   -->
+<!-- 
+   <div class="form-container">
+    <h2>GitHub Authentication</h2>
+  
+    <div class="input-button-group">
+      <tds-text-field
+        data-testid="token-input"
+        type="text"
+        size="lg"
+        label="GitHub Personal Access Token"
+        label-position="inside"
+        placeholder="Enter your GitHub Token"
+        [(ngModel)]="token"
+        [state]="errorMessage ? 'error' : 'default'"
+        [helper]="errorMessage">
+        <tds-icon slot="suffix" name="lock" size="20px"></tds-icon>
+      </tds-text-field>
+  
+      <tds-button
+        data-testid="submit-button"
+        type="button"
+        variant="primary"
+        size="lg"
+        (click)="authenticate()"
+        text="Submit">
+        <tds-icon slot="icon" size="20px" name="chevron_right"></tds-icon>
+      </tds-button>
+    </div>
+  
+    <div data-testid="error-message" *ngIf="errorMessage" class="error">
+      {{ errorMessage }}
+    </div>
+  
+    <tds-accordion class="accordion-container">
+      <tds-accordion-item>
+        <div slot="header">
+          <tds-icon name="support" size="20px"></tds-icon> What is a GitHub Token?
+        </div>
+        <div>
+          <p>
+            A GitHub personal access token is used to authenticate with GitHub when accessing APIs
+            or performing operations that require authorization.
+          </p>
+          <p>
+            To generate a token, follow these steps:
+          </p>
+          <ol>
+            <li>Go to your GitHub account settings.</li>
+            <li>Navigate to "Developer Settings" > "Personal Access Tokens".</li>
+            <li>Click "Generate new token", provide a name, and select necessary scopes.</li>
+          </ol>
+          <a href="https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token" target="_blank">
+            Learn more about GitHub Tokens
+          </a>
+        </div>
+      </tds-accordion-item>
+    </tds-accordion>
+  </div>
+   -->
+
+   <div class="form-container">
+    <h2>GitHub Authentication</h2>
+  
+    <div class="input-button-group">
+      <tds-text-field
+        data-testid="token-input"
+        type="text"
+        size="lg"
+        label="GitHub Personal Access Token"
+        label-position="inside"
+        placeholder="Enter your GitHub Token"
+        [(ngModel)]="token"
+        [state]="errorMessage ? 'error' : 'default'"
+        [helper]="errorMessage">
+        <tds-icon slot="suffix" name="lock" size="20px"></tds-icon>
+      </tds-text-field>
+  
+      <tds-button
+        data-testid="submit-button"
+        type="button"
+        variant="primary"
+        size="lg"
+        (click)="authenticate()"
+        text="Submit">
+        <tds-icon slot="icon" size="20px" name="chevron_right"></tds-icon>
+      </tds-button>
+    </div>
+  
+    <div *ngIf="errorMessage" data-testid="error-message" class="error-message">
+      <p>{{ errorMessage }}</p>
+    </div>
+  
+    <tds-accordion class="accordion-container">
+      <tds-accordion-item>
+        <div slot="header">
+          <tds-icon name="support" size="20px"></tds-icon> What is a GitHub Token?
+        </div>
+        <div class="accordion-content">
+          <p>
+            A GitHub personal access token is used to authenticate with GitHub when accessing APIs
+            or performing operations that require authorization.
+          </p>
+          <p>
+            To generate a token, follow these steps:
+          </p>
+          <ol>
+            <li>Go to your GitHub account settings.</li>
+            <li>Navigate to <strong>Developer Settings</strong> > <strong>Personal Access Tokens</strong>.</li>
+            <li>Click <strong>Generate new token</strong>, provide a name, and select necessary scopes.</li>
+          </ol>
+          <a 
+            href="https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token" 
+            target="_blank">
             Learn more about GitHub Tokens
           </a>
         </div>

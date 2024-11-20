@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthGithubService } from '../../services/auth-github.service';
 import { UserService } from '../../services/user.service';
-import { GithubUser } from '../../model/github.model';
 import { TegelModule } from '@scania/tegel-angular-17';
 
 @Component({
@@ -18,7 +17,7 @@ import { TegelModule } from '@scania/tegel-angular-17';
 export class AuthFormComponent {
   token = '';
   errorMessage = '';
-
+  tokenPattern = /^ghp_[a-zA-Z0-9]{36}$/;
   constructor(
     private authGithubService: AuthGithubService,
     private userService: UserService,
@@ -26,29 +25,33 @@ export class AuthFormComponent {
   ) {}
 
   authenticate() {
-    if (this.token.trim()) {
-      this.errorMessage = '';
-      this.authGithubService.setToken(this.token);
-  
-      this.authGithubService.getUserInfo().subscribe({
-        next: (data) => {
-          if (data && data.login) { // Check if valid data is returned
-            this.userService.setUserInfo(data);
-            this.router.navigate(['/dashboard'], {
-              queryParams: { token: this.token },
-            });
-          } else {
-            this.errorMessage = 'Invalid GitHub token. Please try again.';
-          }
-        },
-        error: () => {
-          this.errorMessage = 'Invalid GitHub token. Please try again.';
-        },
-      });
-    } else {
+    if (!this.token.trim()) {
       this.errorMessage = 'Please enter a valid GitHub token.';
+      return;
     }
+
+    if (!this.tokenPattern.test(this.token.trim())) {
+      this.errorMessage = 'Invalid token format. Ensure it is a 40-character hexadecimal string.';
+      return;
+    }
+
+    this.errorMessage = '';
+    this.authGithubService.setToken(this.token);
+
+    this.authGithubService.getUserInfo().subscribe({
+      next: (data) => {
+        if (data && data.login) {
+          this.userService.setUserInfo(data);
+          this.router.navigate(['/dashboard'], {
+            queryParams: { token: this.token },
+          });
+        } else {
+          this.errorMessage = 'Invalid GitHub token. Please try again.';
+        }
+      },
+      error: () => {
+        this.errorMessage = 'Invalid GitHub token. Please try again.';
+      },
+    });
   }
-  
-  
 }

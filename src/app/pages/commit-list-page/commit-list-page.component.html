@@ -6,13 +6,14 @@
     (filterChanged)="onFilterChanged($event)">
   </app-filter-controls>
 </div>
+
 <div style="width: 100%">
   <tds-divider orientation="horizontal"></tds-divider>
 </div>
 
 <div *ngIf="loading" class="loading-spinner" data-testid="loading-spinner">Loading commits...</div>
 
-<div class="commit-container" *ngIf="filteredGroupedCommits.length; else noCommits" data-testid="commit-container">
+<div *ngIf="filteredGroupedCommits.length > 0; else noCommits" class="commit-container" data-testid="commit-container">
   <app-commit-list class="commit-section" [commits]="filteredPagedCommits"></app-commit-list>
   <app-paginator
     [length]="filteredGroupedCommits.length"

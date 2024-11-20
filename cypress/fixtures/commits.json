@@ -1,29 +1,47 @@
 [
   {
-    "sha": "1a2b3c",
+    "sha": "0fcc1ed01fd5ef9124584bb4b55ca43125e65558",
     "commit": {
-      "message": "Initial commit",
-      "author": { "name": "John Doe", "email": "john@example.com", "date": "2024-01-01T10:00:00Z" }
+      "author": { "name": "omer Korkmaz", "email": "h.omr.korkmaz@gmail.com", "date": "2022-04-12T00:21:21Z" },
+      "message": "Added categories"
     },
-    "html_url": "https://github.com/user/repo/commit/1a2b3c",
-    "committer": { "avatar_url": "https://example.com/avatar1.png" }
+    "html_url": "https://github.com/Omr-Korkmaz/Landing-Page-NextJs-inprogress/commit/0fcc1ed01fd5ef9124584bb4b55ca43125e65558",
+    "author": { "login": "Omr-Korkmaz", "avatar_url": "https://avatars.githubusercontent.com/u/39599546?v=4" }
   },
   {
-    "sha": "4d5e6f",
+    "sha": "aa72df557212b1a9ef5e166486cf7fb1e537b663",
     "commit": {
-      "message": "Add README.md",
-      "author": { "name": "Jane Smith", "email": "jane@example.com", "date": "2024-01-05T14:30:00Z" }
+      "author": { "name": "omer Korkmaz", "email": "h.omr.korkmaz@gmail.com", "date": "2022-04-11T20:08:46Z" },
+      "message": "Category added"
     },
-    "html_url": "https://github.com/user/repo/commit/4d5e6f",
-    "committer": { "avatar_url": "https://example.com/avatar2.png" }
+    "html_url": "https://github.com/Omr-Korkmaz/Landing-Page-NextJs-inprogress/commit/aa72df557212b1a9ef5e166486cf7fb1e537b663",
+    "author": { "login": "Omr-Korkmaz", "avatar_url": "https://avatars.githubusercontent.com/u/39599546?v=4" }
   },
   {
-    "sha": "7g8h9i",
+    "sha": "5060f21f3d301178abcc5583a119bc990670733b",
     "commit": {
-      "message": "Fix bug in authentication flow",
-      "author": { "name": "Alice Johnson", "email": "alice@example.com", "date": "2024-02-10T09:45:00Z" }
+      "author": { "name": "omer Korkmaz", "email": "h.omr.korkmaz@gmail.com", "date": "2022-04-11T10:09:08Z" },
+      "message": "Changed the folder name"
     },
-    "html_url": "https://github.com/user/repo/commit/7g8h9i",
-    "committer": { "avatar_url": "https://example.com/avatar3.png" }
+    "html_url": "https://github.com/Omr-Korkmaz/Landing-Page-NextJs-inprogress/commit/5060f21f3d301178abcc5583a119bc990670733b",
+    "author": { "login": "Omr-Korkmaz", "avatar_url": "https://avatars.githubusercontent.com/u/39599546?v=4" }
+  },
+  {
+    "sha": "808a6e0a66a1943363cce73b1e0d02fdf75a4b44",
+    "commit": {
+      "author": { "name": "omer Korkmaz", "email": "h.omr.korkmaz@gmail.com", "date": "2022-04-11T10:03:14Z" },
+      "message": "Create new style Navbar (H&M navbar clone)"
+    },
+    "html_url": "https://github.com/Omr-Korkmaz/Landing-Page-NextJs-inprogress/commit/808a6e0a66a1943363cce73b1e0d02fdf75a4b44",
+    "author": { "login": "Omr-Korkmaz", "avatar_url": "https://avatars.githubusercontent.com/u/39599546?v=4" }
+  },
+  {
+    "sha": "9fd6826f4f675889e946c4f3c880a52df604efa2",
+    "commit": {
+      "author": { "name": "omer Korkmaz", "email": "h.omr.korkmaz@gmail.com", "date": "2022-04-11T07:11:26Z" },
+      "message": "Changed root name"
+    },
+    "html_url": "https://github.com/Omr-Korkmaz/Landing-Page-NextJs-inprogress/commit/9fd6826f4f675889e946c4f3c880a52df604efa2",
+    "author": { "login": "Omr-Korkmaz", "avatar_url": "https://avatars.githubusercontent.com/u/39599546?v=4" }
   }
 ]

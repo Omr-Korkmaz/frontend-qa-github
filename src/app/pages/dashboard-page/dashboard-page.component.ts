@@ -167,7 +167,7 @@ export class DashboardPageComponent implements OnInit {
   
   selectRepository(repo: GithubRepository) {
     this.router.navigate(['/commit-list'], {
-      queryParams: { ownerLogin: repo.owner.login, repositoryName: repo.name },
+      queryParams: { owner: repo.owner.login, repo: repo.name },
     });
   }
 }
