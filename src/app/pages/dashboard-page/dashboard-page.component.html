@@ -13,6 +13,12 @@
 
     <div class="container">
       <div class="wrapper">
+        <tds-block mode-variant="primary" data-testid="project-count-block">
+          <p class="tds-body-01">Number of Projects</p>
+          <!-- <h3 class="tds-headline-01">{{ repositories.length }}</h3> -->
+          <h3 class="tds-headline-01">{{ userInfo.public_repos }}</h3>
+
+        </tds-block>
 
         <tds-block mode-variant="primary" (click)="navigateToAllCommits()" data-testid="total-commits-block">
           <p class="tds-body-01">Total Commits Across All Repositories</p>
