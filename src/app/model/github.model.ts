@@ -97,7 +97,7 @@ export interface Commit {
       date: string;
     };
   };
-  repository: string; //for filtering
+  repository: string;
   timeAgo: string;
 }
 

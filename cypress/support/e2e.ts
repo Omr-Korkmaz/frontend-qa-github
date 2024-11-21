@@ -21,6 +21,3 @@ Cypress.on('uncaught:exception', (err, runnable) => {
     return false; // Prevent Cypress from failing the test
   });
   
-
-// Alternatively you can use CommonJS syntax:
-// require('./commands')

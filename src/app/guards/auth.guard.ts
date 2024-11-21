@@ -15,7 +15,7 @@ export class AuthGuard implements CanActivate {
       this.router.navigate(['/auth']);
       return of(false);
     }
-
+  
     return this.authGithubService.getUserInfo().pipe(
       map((user) => {
         if (user && user.login) {
@@ -31,4 +31,5 @@ export class AuthGuard implements CanActivate {
       })
     );
   }
+  
 }

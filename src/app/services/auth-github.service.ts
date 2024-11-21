@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { catchError, forkJoin, map, mergeMap, Observable, of } from 'rxjs';
 import { GithubUser, GithubRepository, Commit } from '../model/github.model';
+import { Router } from '@angular/router';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,25 +12,34 @@ export class AuthGithubService {
   private baseUrl = 'https://api.github.com';
   private token: string | null = null;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private userService: UserService, private router: Router) {}
 
   setToken(token: string): void {
     this.token = token;
+    localStorage.setItem('authToken', token); 
   }
-
+  
   getToken(): string | null {
+    if (!this.token) {
+      this.token = localStorage.getItem('authToken'); 
+    }
     return this.token;
   }
-
+  
   hasToken(): boolean {
-    return this.token !== null;
+    return this.getToken() !== null;
   }
+  
+  clearToken(): void {
+    this.token = null;
+    localStorage.removeItem('authToken'); 
+  }
+  
 
   private getHeaders(): HttpHeaders {
     return new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
   }
 
-  // Fetches commits for a specific repository
   getCommits(owner: string, repo: string): Observable<Commit[]> {
     const url = `${this.baseUrl}/repos/${owner}/${repo}/commits`;
     return this.http.get<Commit[]>(url, { headers: this.getHeaders() }).pipe(
@@ -98,6 +109,12 @@ export class AuthGithubService {
     );
   }
 
+  logout(): void {
+    this.clearToken(); 
+    this.userService.clearUserInfo();
+    this.router.navigate(['/auth']); 
+  }
+
   getCommitsPerMonth(): Observable<{ [month: string]: number }> {
     return this.getRepositories().pipe(
       mergeMap((repos: GithubRepository[]) =>
@@ -129,7 +146,7 @@ export class AuthGithubService {
     return this.http.get<GithubUser>(url, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
         console.error('Error fetching user info:', error);
-        return of(null); // Return null on failure
+        return of(null); 
       })
     );
   }

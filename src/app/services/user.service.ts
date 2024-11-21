@@ -6,23 +6,27 @@ import { GithubUser } from '../model/github.model';
   providedIn: 'root',
 })
 export class UserService {
-  isAuthenticated() {
-    throw new Error('Method not implemented.');
-  }
   private userInfoSubject: BehaviorSubject<GithubUser | null> = new BehaviorSubject<GithubUser | null>(null);
   userInfo$: Observable<GithubUser | null> = this.userInfoSubject.asObservable();
 
-  constructor() {}
+  constructor() {
+    const storedUserInfo = localStorage.getItem('userInfo');
+    if (storedUserInfo) {
+      this.userInfoSubject.next(JSON.parse(storedUserInfo));
+    }
+  }
+
   setUserInfo(user: GithubUser): void {
-    this.userInfoSubject.next(user); 
+    this.userInfoSubject.next(user);
+    localStorage.setItem('userInfo', JSON.stringify(user)); 
   }
 
   getUserInfo(): GithubUser | null {
-    return this.userInfoSubject.getValue(); 
+    return this.userInfoSubject.getValue();
   }
 
   clearUserInfo(): void {
-    this.userInfoSubject.next(null); 
+    this.userInfoSubject.next(null);
+    localStorage.removeItem('userInfo'); 
   }
-
 }
