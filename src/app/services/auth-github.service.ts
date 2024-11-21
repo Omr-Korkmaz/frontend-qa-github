@@ -135,21 +135,31 @@ export class AuthGithubService {
     );
   }
 
+  // getUserInfo(): Observable<GithubUser | null> {
+  //   if (this.cachedUserInfo) {
+  //     return of(this.cachedUserInfo);
+  //   }
+  //   const url = `${this.baseUrl}/user`;
+  //   return this.http.get<GithubUser>(url, { headers: this.getHeaders() }).pipe(
+  //     map((userInfo) => {
+  //       this.cachedUserInfo = userInfo;
+  //       return userInfo;
+  //     }),
+  //     catchError(() => {
+  //       this.cachedUserInfo = null;
+  //       return of(null);
+  //     }),
+  //     shareReplay(1)
+  //   );
+  // }
+
   getUserInfo(): Observable<GithubUser | null> {
-    if (this.cachedUserInfo) {
-      return of(this.cachedUserInfo);
-    }
     const url = `${this.baseUrl}/user`;
     return this.http.get<GithubUser>(url, { headers: this.getHeaders() }).pipe(
-      map((userInfo) => {
-        this.cachedUserInfo = userInfo;
-        return userInfo;
-      }),
-      catchError(() => {
-        this.cachedUserInfo = null;
-        return of(null);
-      }),
-      shareReplay(1)
+      catchError((error) => {
+        console.error('Error fetching user info:', error);
+        return of(null); // Return null on failure
+      })
     );
   }
 

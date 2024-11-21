@@ -1,15 +1,16 @@
 describe('Dashboard Component Validation with Mock Data', () => {
+  const mockValidToken = Cypress.env('mockToken') || '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'; 
+
   beforeEach(() => {
     cy.intercept('GET', '**/user', { fixture: 'user.json' }).as('getUser');
-
     cy.intercept('GET', '**/user/repos', { fixture: 'repositories.json' }).as('getRepos');
-
     cy.intercept('GET', '**/repos/**/languages', { fixture: 'languages.json' }).as('getLanguages');
 
     cy.visit('/auth');
-    cy.get('[data-testid="token-input"]').type('mock-valid-token');
+    cy.get('[data-testid="token-input"]').type(mockValidToken); 
     cy.get('[data-testid="submit-button"]').click();
 
+    cy.wait('@getUser');
     cy.url().should('include', '/dashboard');
   });
 
@@ -22,14 +23,12 @@ describe('Dashboard Component Validation with Mock Data', () => {
 
   it('Should display bar and pie charts using mock data', () => {
     cy.wait('@getLanguages');
-
     cy.get('[data-testid="bar-chart"]').should('exist').and('be.visible');
     cy.get('[data-testid="pie-chart"]').should('exist').and('be.visible');
   });
 
   it('Should display the repository list', () => {
     cy.wait('@getRepos');
-
     cy.get('[data-testid="repositories-container"]').should('exist').and('be.visible');
     cy.get('[data-testid="repository-item"]').should('have.length', 6); 
   });

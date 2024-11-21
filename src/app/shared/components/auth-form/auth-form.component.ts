@@ -25,6 +25,7 @@ export class AuthFormComponent {
   ) {}
 
   authenticate() {
+    console.log('Token:', this.token);
     if (!this.token.trim()) {
       this.errorMessage = 'Please enter a valid GitHub token.';
       return;

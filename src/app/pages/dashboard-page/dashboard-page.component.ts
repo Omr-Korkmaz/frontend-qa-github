@@ -57,7 +57,7 @@ export class DashboardPageComponent implements OnInit {
   }
 
   private loadData() {
-    this.lastRefreshed = new Date(); // Update refresh timestamp
+    this.lastRefreshed = new Date();
 
     this.loading = true;
 
