@@ -97,6 +97,26 @@ export class DashboardPageComponent implements OnInit {
     });
   }
 
+  // private getTotalCommits(repos: GithubRepository[]): void {
+  //   const commitRequests = repos.map((repo) =>
+  //     this.authGithubService.fetchAllCommits(repo.owner.login, repo.name).pipe(
+  //       catchError((error) => {
+  //         console.error(`Error fetching commits for ${repo.name}:`, error);
+  //         return of([]);
+  //       })
+  //     )
+  //   );
+
+  //   forkJoin(commitRequests).subscribe({
+  //     next: (commitsArray) => {
+  //       this.totalCommits = commitsArray.reduce((sum, commits) => sum + commits.length, 0);
+  //     },
+  //     error: (error) => {
+  //       console.error('Error fetching total commits:', error);
+  //     }
+  //   });
+  // }
+
   private getTotalCommits(repos: GithubRepository[]): void {
     const commitRequests = repos.map((repo) =>
       this.authGithubService.fetchAllCommits(repo.owner.login, repo.name).pipe(
@@ -106,16 +126,39 @@ export class DashboardPageComponent implements OnInit {
         })
       )
     );
-
+  
     forkJoin(commitRequests).subscribe({
       next: (commitsArray) => {
-        this.totalCommits = commitsArray.reduce((sum, commits) => sum + commits.length, 0);
+        let totalCommits = 0;
+  
+        // Current date
+        const currentDate = new Date();
+  
+        commitsArray.forEach((commits) => {
+          // Filter commits that are within the last 12 months
+          const filteredCommits = commits.filter(commit => {
+            const commitDate = new Date(commit.commit.author.date);
+            const monthsDifference = this.getMonthsDifference(commitDate, currentDate);
+            return monthsDifference <= 12; // Include commits within the last 12 months
+          });
+  
+          totalCommits += filteredCommits.length;
+        });
+  
+        this.totalCommits = totalCommits;
       },
       error: (error) => {
         console.error('Error fetching total commits:', error);
       }
     });
   }
+  
+  private getMonthsDifference(date1: Date, date2: Date): number {
+    const yearDiff = date2.getFullYear() - date1.getFullYear();
+    const monthDiff = date2.getMonth() - date1.getMonth();
+    return yearDiff * 12 + monthDiff;
+  }
+  
 
   private prepareLanguageChart(repositories: GithubRepository[]): void {
     const languageRequests = repositories.map((repo) =>

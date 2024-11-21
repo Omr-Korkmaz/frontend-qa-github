@@ -1,1 +1,10 @@
-<p>repository-selector works!</p>
+<div class="repo-selector" data-testid="repo-selector">
+    <label for="repo-select" data-testid="repo-select-label">Filter by Repository:</label>
+    <select id="repo-select" (change)="onRepoChange($event.target.value)" data-testid="repo-select">
+      <option value="" data-testid="repo-all-option">All Repositories</option>
+      <option *ngFor="let repo of repositories" [value]="repo.name" data-testid="repo-option">
+        {{ repo.name }}
+      </option>
+    </select>
+  </div>
+  
