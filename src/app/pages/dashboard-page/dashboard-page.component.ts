@@ -40,6 +40,7 @@ export class DashboardPageComponent implements OnInit {
 
   barChartLabels: string[] = [];
   barChartData: number[] = [];
+  loading: boolean = true; 
 
 
   constructor(
@@ -56,6 +57,7 @@ export class DashboardPageComponent implements OnInit {
         this.loadData();
       } else {
         this.errorMessage = 'No token provided. Please log in again.';
+        
       }
     });
     this.authGithubService.getLanguages('owner', 'repo').subscribe((languages) => {

@@ -6,6 +6,9 @@ import { GithubUser } from '../model/github.model';
   providedIn: 'root',
 })
 export class UserService {
+  isAuthenticated() {
+    throw new Error('Method not implemented.');
+  }
   private userInfoSubject: BehaviorSubject<GithubUser | null> = new BehaviorSubject<GithubUser | null>(null);
   userInfo$: Observable<GithubUser | null> = this.userInfoSubject.asObservable();
 

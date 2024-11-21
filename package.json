@@ -23,6 +23,7 @@
     "@auth0/auth0-angular": "^2.2.3",
     "@scania/tegel-angular-17": "^1.19.0",
     "chart.js": "^4.4.6",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "rxjs": "~7.8.0",
     "timeago.js": "^4.0.2",
     "tslib": "^2.3.0",
