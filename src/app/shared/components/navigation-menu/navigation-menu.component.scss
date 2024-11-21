@@ -1,0 +1,43 @@
+.nav-links {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  
+    a {
+      text-decoration: none;
+      color: #333;
+      font-size: 16px;
+      padding: 10px 15px;
+      border-radius: 5px;
+  
+      &:hover {
+        background-color: #f0f0f0;
+      }
+  
+      &.selected {
+        background-color: #007bff;
+        color: white;
+      }
+    }
+  }
+  
+  .side-menu-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  
+    li {
+      margin: 10px 0;
+  
+      a {
+        text-decoration: none;
+        color: #333;
+        font-size: 16px;
+  
+        &:hover {
+          color: #007bff;
+        }
+      }
+    }
+  }
+  

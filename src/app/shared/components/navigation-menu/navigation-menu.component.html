@@ -1,3 +1,4 @@
+
 <div class="demo-layout">
   <tds-header>
     <tds-header-hamburger
@@ -10,7 +11,25 @@
 
     <tds-header-title>Omer K - Scania - Test</tds-header-title>
 
-
+    <!-- Main Navigation Items -->
+    <nav class="nav-links">
+      <a
+        *ngIf="isAuthenticated"
+        (click)="navigateTo('dashboard')"
+        routerLinkActive="selected"
+      >
+        Dashboard
+      </a>
+      <a
+        *ngIf="isAuthenticated"
+        (click)="navigateTo('commit-list')"
+        routerLinkActive="selected"
+      >
+        Commits
+      </a>
+      <a (click)="navigateTo('about')" routerLinkActive="selected">About</a>
+      <a (click)="navigateTo('truck-types')" routerLinkActive="selected">Truck Types</a>
+    </nav>
 
     <tds-header-dropdown slot="end" class="demo-hide demo-xs-show" no-dropdown-icon selected>
       <img
@@ -24,16 +43,10 @@
             [header]="'Welcome, ' + userInfo?.name"
             [subheader]="'Your Dashboard'"
           ></tds-header-dropdown-list-user>
-        
-          
-          <tds-header-dropdown-list-item (click)="logOut()">
-            <a>Logout</a>
-          </tds-header-dropdown-list-item>
+          <tds-header-dropdown-list-item (click)="logOut()">Logout</tds-header-dropdown-list-item>
         </ng-container>
         <ng-template #notLoggedIn>
-          <tds-header-dropdown-list-item (click)="logIn()">
-            <p style="padding: 10px;">Login via github token</p>
-          </tds-header-dropdown-list-item>
+          <tds-header-dropdown-list-item (click)="logIn()">Login</tds-header-dropdown-list-item>
         </ng-template>
       </tds-header-dropdown-list>
     </tds-header-dropdown>
@@ -43,40 +56,24 @@
     </tds-header-brand-symbol>
   </tds-header>
 
-  <tds-side-menu
-    [open]="isMenuOpen"
-    id="demo-side-menu"
-    aria-label="Side menu"
-  >
+  <!-- Side Menu -->
+  <tds-side-menu [open]="isMenuOpen" id="demo-side-menu" aria-label="Side menu">
     <tds-side-menu-overlay slot="overlay" (click)="closeMenu()"></tds-side-menu-overlay>
-
     <tds-side-menu-close-button slot="close-button" (click)="closeMenu()"></tds-side-menu-close-button>
 
-    <tds-side-menu-dropdown slot="end" selected default-open>
-      <tds-side-menu-user
-        slot="label"
-        [heading]="userInfo?.name || 'Name Namesson'"
-        [subheading]="userInfo?.company || 'Company name'"
-        [imgSrc]="userInfo?.avatar_url || 'https://www.svgrepo.com/show/384676/account-avatar-profile-user-6.svg'"
-        img-alt=""
-      ></tds-side-menu-user>
-      <tds-header-dropdown-list size="lg">
-        <ng-container *ngIf="isAuthenticated; else notLoggedIn">
-          <tds-header-dropdown-list-user
-            [header]="'Welcome, ' + userInfo?.name"
-            [subheader]="'Your Dashboard'"
-          ></tds-header-dropdown-list-user>
-         
-          <tds-header-dropdown-list-item (click)="logOut()">
-            <a>Logout</a>
-          </tds-header-dropdown-list-item>
-        </ng-container>
-        <ng-template #notLoggedIn>
-          <tds-header-dropdown-list-item (click)="logIn()">
-            <p style="padding: 10px;">Login via github token</p>
-          </tds-header-dropdown-list-item>
-        </ng-template>
-      </tds-header-dropdown-list>
-    </tds-side-menu-dropdown>
+    <ul class="side-menu-links">
+      <li *ngIf="isAuthenticated">
+        <a (click)="navigateTo('dashboard')">Dashboard</a>
+      </li>
+      <li *ngIf="isAuthenticated">
+        <a (click)="navigateTo('commit-list')">Commits</a>
+      </li>
+      <li>
+        <a (click)="navigateTo('about')">About</a>
+      </li>
+      <li>
+        <a (click)="navigateTo('truck-types')">Truck Types</a>
+      </li>
+    </ul>
   </tds-side-menu>
 </div>

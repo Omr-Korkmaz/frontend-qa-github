@@ -12,24 +12,28 @@ export class AuthGuard implements CanActivate {
 
   canActivate(): Observable<boolean> {
     if (!this.authGithubService.hasToken()) {
-      this.router.navigate(['/auth']);
+      this.redirectToLogin();
       return of(false);
     }
-  
+
     return this.authGithubService.getUserInfo().pipe(
       map((user) => {
-        if (user && user.login) {
+        if (user?.login) {
           return true;
         } else {
-          this.router.navigate(['/auth']);
+          this.redirectToLogin();
           return false;
         }
       }),
       catchError(() => {
-        this.router.navigate(['/auth']);
+        this.redirectToLogin();
         return of(false);
       })
     );
   }
-  
+
+  private redirectToLogin(): void {
+    alert('You need to log in to access this page.');
+    this.router.navigate(['/auth']);
+  }
 }
