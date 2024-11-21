@@ -1,4 +1,3 @@
-
 <div class="demo-layout">
   <tds-header>
     <tds-header-hamburger
@@ -11,12 +10,12 @@
 
     <tds-header-title>Omer K - Scania - Test</tds-header-title>
 
-    <!-- Main Navigation Items -->
-    <nav class="nav-links">
+    <nav class="nav-links demo-hide demo-xs-show">
       <a
         *ngIf="isAuthenticated"
         (click)="navigateTo('dashboard')"
         routerLinkActive="selected"
+        class="nav-link"
       >
         Dashboard
       </a>
@@ -24,11 +23,10 @@
         *ngIf="isAuthenticated"
         (click)="navigateTo('commit-list')"
         routerLinkActive="selected"
+        class="nav-link"
       >
         Commits
       </a>
-      <a (click)="navigateTo('about')" routerLinkActive="selected">About</a>
-      <a (click)="navigateTo('truck-types')" routerLinkActive="selected">Truck Types</a>
     </nav>
 
     <tds-header-dropdown slot="end" class="demo-hide demo-xs-show" no-dropdown-icon selected>
@@ -37,18 +35,31 @@
         [src]="userInfo?.avatar_url || 'https://www.svgrepo.com/show/384676/account-avatar-profile-user-6.svg'"
         alt="User menu"
       />
-      <tds-header-dropdown-list size="lg">
+      <tds-header-dropdown-list size="lg" class="custom-dropdown-list">
         <ng-container *ngIf="isAuthenticated; else notLoggedIn">
           <tds-header-dropdown-list-user
             [header]="'Welcome, ' + userInfo?.name"
             [subheader]="'Your Dashboard'"
           ></tds-header-dropdown-list-user>
-          <tds-header-dropdown-list-item (click)="logOut()">Logout</tds-header-dropdown-list-item>
+
+          <ul class="side-menu-links">
+            
+            <li style="cursor: pointer;" *ngIf="!isAuthenticated">
+              <a (click)="logIn()">Log In</a>
+            </li>
+            <li style="cursor: pointer;" *ngIf="isAuthenticated">
+              <a (click)="logOut()">Log Out</a>
+            </li>
+          </ul>
+     
         </ng-container>
         <ng-template #notLoggedIn>
-          <tds-header-dropdown-list-item (click)="logIn()">Login</tds-header-dropdown-list-item>
+          <tds-header-dropdown-list-item class="custom-list-item" (click)="logIn()">
+            <span>Login</span>
+          </tds-header-dropdown-list-item>
         </ng-template>
       </tds-header-dropdown-list>
+      
     </tds-header-dropdown>
 
     <tds-header-brand-symbol slot="end">
@@ -56,23 +67,22 @@
     </tds-header-brand-symbol>
   </tds-header>
 
-  <!-- Side Menu -->
   <tds-side-menu [open]="isMenuOpen" id="demo-side-menu" aria-label="Side menu">
     <tds-side-menu-overlay slot="overlay" (click)="closeMenu()"></tds-side-menu-overlay>
     <tds-side-menu-close-button slot="close-button" (click)="closeMenu()"></tds-side-menu-close-button>
 
     <ul class="side-menu-links">
-      <li *ngIf="isAuthenticated">
+      <li style="cursor: pointer;" *ngIf="isAuthenticated">
         <a (click)="navigateTo('dashboard')">Dashboard</a>
       </li>
-      <li *ngIf="isAuthenticated">
+      <li style="cursor: pointer;" *ngIf="isAuthenticated">
         <a (click)="navigateTo('commit-list')">Commits</a>
       </li>
-      <li>
-        <a (click)="navigateTo('about')">About</a>
+      <li style="cursor: pointer;" *ngIf="!isAuthenticated">
+        <a (click)="logIn()">Log In</a>
       </li>
-      <li>
-        <a (click)="navigateTo('truck-types')">Truck Types</a>
+      <li style="cursor: pointer;" *ngIf="isAuthenticated">
+        <a (click)="logOut()">Log Out</a>
       </li>
     </ul>
   </tds-side-menu>
