@@ -1,11 +1,10 @@
-<div *ngIf="repositories.length > 0" class="repository-list">
-    <ul>
-      <li *ngFor="let repo of repositories" (click)="onRepositoryClick(repo)">
-        <strong>{{ repo.name }}</strong> - {{ repo.language || 'No language' }}
-      </li>
-    </ul>
-  </div>
-  <div *ngIf="repositories.length === 0 && errorMessage" class="error-message">
-    <p>{{ errorMessage }}</p>
-  </div>
-  
+<div *ngIf="repositories.length > 0" class="repository-list" data-testid="repository-list">
+  <ul>
+    <li *ngFor="let repo of repositories" (click)="selectRepo(repo)" data-testid="repository-item">
+      <strong>{{ repo.name }}</strong> - {{ repo.language || 'No language' }}
+    </li>
+  </ul>
+</div>
+<div *ngIf="repositories.length === 0 && errorMessage" class="error-message" data-testid="error-message">
+  <p>{{ errorMessage }}</p>
+</div>

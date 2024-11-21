@@ -6,20 +6,12 @@ import { CommonModule } from '@angular/common';
   selector: 'app-repository-list',
   standalone: true,
   imports: [CommonModule],
-    template: `
-    <div *ngIf="repositories.length">
-      <h3>Repositories</h3>
-      <ul>
-        <li *ngFor="let repo of repositories" (click)="selectRepo(repo)">
-          {{ repo.name }} - {{ repo.description || 'No description' }}
-        </li>
-      </ul>
-    </div>
-  `,
-  styles: ['/* styles */']
+  templateUrl: './repository-list.component.html',
+  styleUrls: ['./repository-list.component.scss'],
 })
 export class RepositoryListComponent {
   @Input() repositories: GithubRepository[] = [];
+  @Input() errorMessage: string = ''; // Add errorMessage as an input property
   @Output() repositorySelected = new EventEmitter<GithubRepository>();
 
   selectRepo(repo: GithubRepository) {
