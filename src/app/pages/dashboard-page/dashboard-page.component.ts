@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthGithubService } from '../../services/auth-github.service';
 import { GithubRepository, GithubUser } from '../../model/github.model';
-import { catchError, forkJoin, of } from 'rxjs';
+import { catchError, forkJoin, interval, of, Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { TegelModule } from '@scania/tegel-angular-17';
 import { FormsModule } from '@angular/forms';
@@ -31,6 +31,10 @@ export class DashboardPageComponent implements OnInit {
   barChartLabels: string[] = [];
   barChartData: number[] = [];
   loading: boolean = true;
+  lastRefreshed: Date | null = null;
+
+  private autoRefreshSubscription: Subscription | null = null;
+
 
   constructor(
     private authGithubService: AuthGithubService,
@@ -40,7 +44,16 @@ export class DashboardPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadData();
+    this.autoRefreshSubscription = interval(900000).subscribe(() => {
+      this.loadData();
+    });
     this.loadCharts();
+  }
+
+  ngOnDestroy(): void {
+    if (this.autoRefreshSubscription) {
+      this.autoRefreshSubscription.unsubscribe();
+    }
   }
 
   private loadData() {
@@ -59,6 +72,8 @@ export class DashboardPageComponent implements OnInit {
         this.getTotalCommits(this.repositories);
         this.prepareLanguageChart(this.repositories);
         this.loading = false;
+        this.lastRefreshed = new Date();
+
       },
       error: (err) => {
         console.error('Error loading data:', err);

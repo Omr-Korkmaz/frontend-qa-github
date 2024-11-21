@@ -5,6 +5,8 @@ import { shareReplay } from 'rxjs/operators';
 import { GithubUser, GithubRepository, Commit } from '../model/github.model';
 import { Router } from '@angular/router';
 import { UserService } from './user.service';
+import { DataCacheService } from './data-cache.service';
+
 
 @Injectable({
   providedIn: 'root',
