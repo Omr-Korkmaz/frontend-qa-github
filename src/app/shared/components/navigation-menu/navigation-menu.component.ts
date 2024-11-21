@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { TegelModule } from '@scania/tegel-angular-17';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { GithubUser } from '../../../model/github.model'; 
 
 @Component({
   selector: 'app-navigation-menu',
@@ -16,7 +17,7 @@ import { CommonModule } from '@angular/common';
 })
 export class NavigationMenuComponent implements OnInit, OnDestroy {
   isMenuOpen = false;
-  userInfo: any = null;
+  userInfo: GithubUser | null = null
   private subscription = new Subscription();
 
   constructor(private userService: UserService, private router: Router) {}

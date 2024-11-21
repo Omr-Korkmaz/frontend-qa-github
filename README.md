@@ -6,9 +6,6 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
 ## Build
 
@@ -20,11 +17,34 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 ## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+##  Running end-to-end tests
+To run End-to-End (E2E) tests with Cypress:
+
+##   Configure Cypress Environment
+Open the cypress.json file in your project’s root directory.
+
+##  Add your mock token in the env section:
+{
+  "baseUrl": "http://localhost:4200",
+  "env": {
+    "MOCK_TOKEN": "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"
+  }
+}
+
+This will allow Cypress to use the mock token for testing.
+
+##  Run Cypress
+To open the Cypress test runner and see the UI:
+
+`npx cypress open`
+
+To run the tests in headless mode (without the UI):
+`npx cypress run`
+
+
 
 # GitHub Insights Dashboard
 
@@ -44,7 +64,7 @@ Once authenticated, users are directed to the **Dashboard Page**, which provides
 
 - **Summary Tile**:  
   Key metrics including:
-  - Total number of repositories.
+  - Total number of this year repositories.
   - Number of followers.
   - Number of users the account is following.
 
@@ -57,8 +77,11 @@ The **Commit List Page** provides detailed commit data and filtering options:
 - **Searchable Commit List**:  
   Search commits by:
   - Commit message.
-  - Date.
-  - Repository name.
+- **filter Commit List**:  
+-date
+-commit
+-repo
+
 
 - **Date Categorization**:  
   Commits are grouped by date for easy tracking of daily contributions.
@@ -70,17 +93,3 @@ The **Commit List Page** provides detailed commit data and filtering options:
   Clicking on a commit opens its detailed view on GitHub.
 
 ---
-
-## 3. Additional Features
-
-### 3.1 Auto-Refresh
-The dashboard automatically refreshes every 15 minutes to fetch the latest data from GitHub.
-
-### 3.2 Responsive Design
-The application is  responsive, providing an optimal experience on desktops, tablets, and mobile devices.
-
-### 3.3 Quality Assurance
-
----
-
-## 4. Deployment and Setup

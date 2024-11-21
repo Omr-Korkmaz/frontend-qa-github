@@ -6,6 +6,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
+import {GithubRepository} from '../../../model/github.model'
 
 @Component({
   selector: 'app-filter-controls',
@@ -22,7 +23,7 @@ import { MatNativeDateModule } from '@angular/material/core';
   styleUrls: ['./filter-controls.component.scss'],
 })
 export class FilterControlsComponent {
-  @Input() repositories: any[] = [];
+  @Input() repositories: GithubRepository[] = [];
   @Input() selectedRepository: string = '';
   @Output() selectedRepositoryChange = new EventEmitter<string>();
   @Output() filterChanged = new EventEmitter<{
