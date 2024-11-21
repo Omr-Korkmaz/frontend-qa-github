@@ -3,6 +3,7 @@
     [(ngModel)]="selectedRepository"
     (change)="onFilterChange()"
     class="repository-select"
+    aria-label="Filter by repository"
   >
     <option value="">All Repositories</option>
     <option *ngFor="let repo of repositories" [value]="repo.name">
@@ -16,28 +17,31 @@
     (input)="onFilterChange()"
     class="search-input"
     placeholder="Search Commits"
+    aria-label="Search commits"
   />
 
   <div class="date-filters">
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" class="date-input">
       <mat-label>Start Date</mat-label>
       <input
         matInput
         [matDatepicker]="startDatePicker"
         [(ngModel)]="startDate"
         (dateChange)="onFilterChange()"
+        aria-label="Start date"
       />
       <mat-datepicker-toggle matIconSuffix [for]="startDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #startDatePicker></mat-datepicker>
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" class="date-input">
       <mat-label>End Date</mat-label>
       <input
         matInput
         [matDatepicker]="endDatePicker"
         [(ngModel)]="endDate"
         (dateChange)="onFilterChange()"
+        aria-label="End date"
       />
       <mat-datepicker-toggle matIconSuffix [for]="endDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #endDatePicker></mat-datepicker>

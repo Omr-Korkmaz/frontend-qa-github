@@ -1,7 +1,7 @@
 .filter-controls {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: stretch;
   gap: 20px;
   padding: 20px;
   border: 1px solid #ddd;
@@ -13,14 +13,14 @@
   .search-input,
   mat-form-field {
     flex: 1;
-    max-width: 240px;
-    height: 56px;
+    min-width: 220px;
+    height: 48px;
 
     select,
     input {
       width: 100%;
       height: 100%;
-      padding: 12px;
+      padding: 10px 12px;
       border: 1px solid #ccc;
       border-radius: 6px;
       font-size: 16px;
@@ -42,12 +42,12 @@
     flex-wrap: wrap;
     gap: 20px;
 
-    mat-form-field {
+    .date-input {
       flex: 1;
-      min-width: 150px;
+      min-width: 160px;
 
       .mat-form-field-wrapper {
-        height: 56px;
+        height: 48px;
         display: flex;
         align-items: center;
       }
@@ -55,17 +55,17 @@
       input {
         font-size: 16px;
         height: 100%;
-        padding: 12px;
+        padding: 10px 12px;
         box-sizing: border-box;
       }
     }
   }
 
   .reset-button {
-    height: 56px;
+    height: 48px;
     font-size: 16px;
     padding: 0 24px;
-    background-color: #8b0000;
+    background-color: #d32f2f;
     color: white;
     border: none;
     border-radius: 6px;
@@ -73,7 +73,7 @@
     transition: background-color 0.2s, transform 0.2s;
 
     &:hover {
-      background-color: #a50000;
+      background-color: #c62828;
     }
 
     &:active {
@@ -82,15 +82,20 @@
 
     &:focus {
       outline: none;
-      box-shadow: 0 0 5px #a50000;
+      box-shadow: 0 0 5px #c62828;
     }
   }
 
   @media (max-width: 768px) {
     flex-direction: column;
+    gap: 15px;
 
     .repository-select,
-    .search-input,
+    .search-input {
+      font-size: 14px;
+      padding: 20px;
+    }
+
     mat-form-field,
     .reset-button {
       max-width: 100%;
@@ -98,6 +103,30 @@
 
     .date-filters {
       flex-direction: column;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .repository-select,
+    .search-input {
+      font-size: 14px;
+      padding: 20px;
+    }
+
+    .reset-button {
+      font-size: 14px;
+      height: 44px;
+    }
+
+    .date-input {
+      .mat-form-field-wrapper {
+        font-size: 14px;
+      }
+
+      input {
+        font-size: 14px;
+        padding: 8px;
+      }
     }
   }
 }
