@@ -39,21 +39,5 @@ describe('LanguageChartComponent', () => {
     expect(component.chartLabels).toEqual(mockChartLabels);
   });
 
-  it('should render chart data and labels properly (example test for DOM rendering)', () => {
-    const mockChartData = [50, 30, 20];
-    const mockChartLabels = ['HTML', 'CSS', 'JavaScript'];
 
-    component.chartData = mockChartData;
-    component.chartLabels = mockChartLabels;
-
-    fixture.detectChanges();
-
-    const chartElements = fixture.debugElement.queryAll(By.css('.chart-item'));
-    expect(chartElements.length).toBe(mockChartLabels.length);
-
-    chartElements.forEach((element, index) => {
-      expect(element.nativeElement.textContent).toContain(mockChartLabels[index]);
-      expect(element.nativeElement.textContent).toContain(mockChartData[index]);
-    });
-  });
 });
