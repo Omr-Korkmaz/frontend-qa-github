@@ -1,6 +1,5 @@
 describe('Dashboard Component Validation with Mock Data', () => {
-  const mockValidToken = Cypress.env('mockToken') || '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'; 
-
+  const mockValidToken = Cypress.env('MOCK_TOKEN');
   beforeEach(() => {
     cy.intercept('GET', '**/user', { fixture: 'user.json' }).as('getUser');
     cy.intercept('GET', '**/user/repos', { fixture: 'repositories.json' }).as('getRepos');

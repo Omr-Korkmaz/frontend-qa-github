@@ -1,5 +1,7 @@
 describe('Authentication Flow', () => {
-  const mockValidToken = Cypress.env('mockToken') || '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'; 
+  const mockValidToken = Cypress.env('MOCK_TOKEN');
+
+  const MOCinValidToken = Cypress.env('iNVALID_TOKEN');
 
   beforeEach(() => {
     cy.intercept('GET', '**/user', (req) => {
@@ -18,9 +20,8 @@ describe('Authentication Flow', () => {
   });
 
   it('Should display error for invalid token', () => {
-    const invalidToken = 'ghp_FAKElKI7UpeRdSdKtTsI07vOdX8wDM4RXNQp'; // A fake token for testing
 
-    cy.get('[data-testid="token-input"]').type(invalidToken);
+    cy.get('[data-testid="token-input"]').type(MOCinValidToken);
     cy.get('[data-testid="submit-button"]').click();
 
     cy.wait('@getUser').then((interception) => {
