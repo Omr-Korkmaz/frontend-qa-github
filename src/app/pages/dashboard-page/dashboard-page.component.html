@@ -61,7 +61,9 @@
   <ng-template #loading>
     <p data-testid="loading-message">Loading user information...</p>
   </ng-template>
-
+  <div class="refresh-timestamp">
+    Last refreshed: {{ lastRefreshed | date: 'short' }}
+  </div>
   <div *ngIf="repositories?.length" class="repositories-container" data-testid="repositories-container">
     <h3 class="tds-headline-03">Repositories</h3>
     <ul class="repository-list">
