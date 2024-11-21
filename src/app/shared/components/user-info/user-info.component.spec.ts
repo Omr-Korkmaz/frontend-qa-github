@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UserInfoComponent } from './user-info.component';
 import { By } from '@angular/platform-browser';
-import { GithubUser } from '../../model/github.model';
+import { GithubUser } from '../../../model/github.model';
 
 describe('UserInfoComponent', () => {
   let component: UserInfoComponent;

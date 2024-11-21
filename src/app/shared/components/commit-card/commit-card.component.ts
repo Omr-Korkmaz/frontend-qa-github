@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Commit } from '../../model/github.model';
+import { Commit } from '../../../model/github.model';
 import { TegelModule } from '@scania/tegel-angular-17';
 
 

@@ -1,6 +1,6 @@
 
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { GithubRepository } from '../../model/github.model';
+import { GithubRepository } from '../../../model/github.model';
 
   @Component({
     selector: 'app-repository-selector',

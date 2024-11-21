@@ -3,8 +3,8 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { AuthGithubService } from '../../services/auth-github.service';
-import { UserService } from '../../services/user.service';
+import { AuthGithubService } from '../../../services/auth-github.service';
+import { UserService } from '../../../services/user.service';
 import { TegelModule } from '@scania/tegel-angular-17';
 
 @Component({

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ChartComponent } from '../../../../components/chart/chart.component';
+import { ChartComponent } from '../../../../shared/components/chart/chart.component';
 
 @Component({
   selector: 'app-language-chart',

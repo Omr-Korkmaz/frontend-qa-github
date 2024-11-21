@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { GithubUser } from '../../model/github.model';
+import { GithubUser } from '../../../model/github.model';
 import { CommonModule } from '@angular/common';
 
 

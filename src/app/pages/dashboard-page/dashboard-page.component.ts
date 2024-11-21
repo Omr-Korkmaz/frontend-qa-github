@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthGithubService } from '../../services/auth-github.service';
 import { GithubRepository, GithubUser } from '../../model/github.model';
-import { UserInfoComponent } from '../../components/user-info/user-info.component';
+import { UserInfoComponent } from '../../shared/components/user-info/user-info.component';
 import { RepositoryListComponent } from './components/repository-list/repository-list.component';
 import { CommitStatsComponent } from './components/commit-stats/commit-stats.component';
 import { CommonModule } from '@angular/common';
 import { TegelModule } from '@scania/tegel-angular-17';
 import { FormsModule } from '@angular/forms';
-import { ChartComponent } from '../../components/chart/chart.component';
+import { ChartComponent } from '../../shared/components/chart/chart.component';
 import { LanguageChartComponent } from './components/language-chart/language-chart.component';
 import { catchError, forkJoin, of } from 'rxjs';
 @Component({

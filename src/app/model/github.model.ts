@@ -82,24 +82,50 @@ export interface GithubRepository {
 
 
 
+// export interface Commit {
+//   sha: string;
+//   html_url: string;
+//   committer: {
+//     name: string;
+//     avatar_url: string;
+//     html_url: string;
+//   };
+//   commit: {
+//     message: string;
+//     author: {
+//       name: string;
+//       date: string;
+//     };
+//   };
+//   repository: string;
+//   timeAgo: string;
+// }
+
 export interface Commit {
   sha: string;
   html_url: string;
-  committer: {
-    name: string;
-    avatar_url: string;
-    html_url: string;
-  };
   commit: {
-    message: string;
     author: {
       name: string;
+      email: string;
       date: string;
     };
+    message: string;
+  };
+  author: {
+    login: string;
+    avatar_url: string;
+  };
+  committer: {
+    name: string;
+    email: string;
+    avatar_url?: string; // Make optional
+    html_url?: string;   // Make optional
   };
   repository: string;
   timeAgo: string;
 }
+
 
 
 

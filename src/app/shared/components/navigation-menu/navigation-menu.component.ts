@@ -1,6 +1,6 @@
 
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { UserService } from '../../services/user.service';
+import { UserService } from '../../../services/user.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { TegelModule } from '@scania/tegel-angular-17';

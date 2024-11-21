@@ -5,11 +5,8 @@
     [(selectedRepository)]="selectedRepository"
     (filterChanged)="onFilterChanged($event)">
   </app-filter-controls>
+
 </div>
-
-
-
-
 
 <div style="width: 100%">
   <tds-divider orientation="horizontal"></tds-divider>
@@ -23,8 +20,7 @@
     [length]="filteredGroupedCommits.length"
     [pageSize]="pageSize"
     [currentPage]="currentPage"
-    (pageChanged)="onPageChange($event)"
-    data-testid="paginator">
+    (pageChanged)="onPageChange($event)">
   </app-paginator>
 </div>
 

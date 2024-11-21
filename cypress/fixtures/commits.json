@@ -1,47 +1,31 @@
 [
   {
-    "sha": "0fcc1ed01fd5ef9124584bb4b55ca43125e65558",
-    "commit": {
-      "author": { "name": "omer Korkmaz", "email": "h.omr.korkmaz@gmail.com", "date": "2022-04-12T00:21:21Z" },
-      "message": "Added categories"
-    },
-    "html_url": "https://github.com/Omr-Korkmaz/Landing-Page-NextJs-inprogress/commit/0fcc1ed01fd5ef9124584bb4b55ca43125e65558",
-    "author": { "login": "Omr-Korkmaz", "avatar_url": "https://avatars.githubusercontent.com/u/39599546?v=4" }
-  },
-  {
-    "sha": "aa72df557212b1a9ef5e166486cf7fb1e537b663",
-    "commit": {
-      "author": { "name": "omer Korkmaz", "email": "h.omr.korkmaz@gmail.com", "date": "2022-04-11T20:08:46Z" },
-      "message": "Category added"
-    },
-    "html_url": "https://github.com/Omr-Korkmaz/Landing-Page-NextJs-inprogress/commit/aa72df557212b1a9ef5e166486cf7fb1e537b663",
-    "author": { "login": "Omr-Korkmaz", "avatar_url": "https://avatars.githubusercontent.com/u/39599546?v=4" }
-  },
-  {
-    "sha": "5060f21f3d301178abcc5583a119bc990670733b",
-    "commit": {
-      "author": { "name": "omer Korkmaz", "email": "h.omr.korkmaz@gmail.com", "date": "2022-04-11T10:09:08Z" },
-      "message": "Changed the folder name"
-    },
-    "html_url": "https://github.com/Omr-Korkmaz/Landing-Page-NextJs-inprogress/commit/5060f21f3d301178abcc5583a119bc990670733b",
-    "author": { "login": "Omr-Korkmaz", "avatar_url": "https://avatars.githubusercontent.com/u/39599546?v=4" }
-  },
-  {
-    "sha": "808a6e0a66a1943363cce73b1e0d02fdf75a4b44",
-    "commit": {
-      "author": { "name": "omer Korkmaz", "email": "h.omr.korkmaz@gmail.com", "date": "2022-04-11T10:03:14Z" },
-      "message": "Create new style Navbar (H&M navbar clone)"
-    },
-    "html_url": "https://github.com/Omr-Korkmaz/Landing-Page-NextJs-inprogress/commit/808a6e0a66a1943363cce73b1e0d02fdf75a4b44",
-    "author": { "login": "Omr-Korkmaz", "avatar_url": "https://avatars.githubusercontent.com/u/39599546?v=4" }
-  },
-  {
-    "sha": "9fd6826f4f675889e946c4f3c880a52df604efa2",
-    "commit": {
-      "author": { "name": "omer Korkmaz", "email": "h.omr.korkmaz@gmail.com", "date": "2022-04-11T07:11:26Z" },
-      "message": "Changed root name"
-    },
-    "html_url": "https://github.com/Omr-Korkmaz/Landing-Page-NextJs-inprogress/commit/9fd6826f4f675889e946c4f3c880a52df604efa2",
-    "author": { "login": "Omr-Korkmaz", "avatar_url": "https://avatars.githubusercontent.com/u/39599546?v=4" }
+    "date": "2022-04-12",
+    "commits": [
+      {
+        "sha": "0fcc1ed01fd5ef9124584bb4b55ca43125e65558",
+        "commit": {
+          "author": {
+            "name": "omer Korkmaz",
+            "email": "h.omr.korkmaz@gmail.com",
+            "date": "2022-04-12T00:21:21Z"
+          },
+          "message": "Added categories"
+        },
+        "html_url": "https://github.com/Omr-Korkmaz/Landing-Page-NextJs-inprogress/commit/0fcc1ed01fd5ef9124584bb4b55ca43125e65558",
+        "author": {
+          "login": "Omr-Korkmaz",
+          "avatar_url": "https://avatars.githubusercontent.com/u/39599546?v=4"
+        },
+        "committer": {
+          "name": "omer Korkmaz",
+          "email": "h.omr.korkmaz@gmail.com",
+          "avatar_url": "https://avatars.githubusercontent.com/u/39599546?v=4", 
+          "html_url": "https://github.com/Omr-Korkmaz"
+        },
+        "repository": "Landing-Page-NextJs-inprogress",
+        "timeAgo": "1 year ago"
+      }
+    ]
   }
 ]
